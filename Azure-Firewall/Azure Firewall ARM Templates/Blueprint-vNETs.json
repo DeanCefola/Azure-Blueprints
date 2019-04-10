@@ -1,0 +1,179 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {     
+    "IPRange": {
+      "type": "string",
+      "defaultValue": "172.16",
+      "metadata": {
+        "description": "Enter the CIRD for this deployment (172.16.x.x leave last 2 octets blank)"
+      },
+      "minLength": 4,
+      "maxLength": 7
+    }    
+  },
+  "variables": {    
+    
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "azfw-vNET-HUB",
+      "apiVersion": "2017-06-01",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "vNET Hub"
+      },
+      "copy": {
+        "name": "vNET-Hub-Copy",
+        "count": 1
+      },
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[concat(parameters('IPRange'),'.0.0/22')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "GatewaySubnet",
+            "properties": {
+              "addressPrefix": "[concat(parameters('IPRange'),'.0.0/24')]"
+            }
+          },
+          {
+            "name": "JumpboxSubnet",
+            "properties": {
+              "addressPrefix": "[concat(parameters('IPRange'),'.1.0/24')]"
+            }
+          },
+          {
+            "name": "AzureFirewallSubnet",
+            "properties": {
+              "addressPrefix": "[concat(parameters('IPRange'),'.2.0/24')]"
+            }
+          }
+        ]
+      },
+      "dependsOn": [
+
+      ],
+      "resources": [
+        {
+          "type": "virtualNetworkPeerings",
+          "name": "Hub--Spoke",
+          "apiVersion": "2016-06-01",
+          "location": "[resourceGroup().location]",
+          "properties": {
+            "allowVirtualNetworkAccess": "true",
+            "allowForwardedTraffic": "true",
+            "allowGatewayTransit": "false",
+            "useRemoteGateways": "false",
+            "remoteVirtualNetwork": {
+              "id": "[resourceId('Microsoft.Network/virtualNetworks', 'azfw-vNET-SPOKE')]"
+            }
+          },
+          "dependsOn": [
+            "[concat('Microsoft.Network/virtualNetworks/', 'azfw-vNET-HUB')]",
+            "[concat('Microsoft.Network/virtualNetworks/', 'azfw-vNET-SPOKE')]"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "azfw-vNET-SPOKE",
+      "apiVersion": "2017-06-01",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "vNET Spoke"
+      },
+      "copy": {
+        "name": "vNET-Spoke-Copy",
+        "count": 1
+      },
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[concat(parameters('IPRange'),'.4.0/24')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "ServersSubnet",
+            "properties": {
+              "addressPrefix": "[concat(parameters('IPRange'),'.4.0/26')]",
+              "routeTable": {
+                "id": "[resourceId('Microsoft.Network/routeTables', 'AZ-RouteTable')]"
+              }
+            }
+          }
+        ]
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/routeTables', 'AZ-RouteTable')]"
+      ],
+      "resources": [
+        {
+          "type": "virtualNetworkPeerings",
+          "name": "Spoke--Hub",
+          "apiVersion": "2016-06-01",
+          "location": "[resourceGroup().location]",
+          "properties": {
+            "allowVirtualNetworkAccess": "true",
+            "allowForwardedTraffic": "true",
+            "allowGatewayTransit": "false",
+            "useRemoteGateways": "false",
+            "remoteVirtualNetwork": {
+              "id": "[resourceId('Microsoft.Network/virtualNetworks', 'azfw-vNET-HUB')]"
+            }
+          },
+          "dependsOn": [
+            "[concat('Microsoft.Network/virtualNetworks/', 'azfw-vNET-HUB')]",
+            "[concat('Microsoft.Network/virtualNetworks/', 'azfw-vNET-SPOKE')]"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Microsoft.Network/routeTables",
+      "name": "AZ-RouteTable",
+      "apiVersion": "2018-02-01",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "Route Table",
+        "Application": "Azure Learning",
+        "CostCode": "AA-Money",
+        "Environment": "Lab"
+      },
+      "copy": {
+        "name": "Route-Copy",
+        "count": 1
+      },
+      "properties": {
+        "disableBgpRoutePropagation": false,
+        "routes": [
+          {
+            "name": "AzfwDefaultRoute",
+            "properties": {
+              "addressPrefix": "0.0.0.0/0",
+              "nextHopType": "VirtualAppliance",
+              "nextHopIpAddress": "[concat(parameters('IPRange'),'.2.4')]"
+            }
+          },
+          {
+            "name": "HUBRoute",
+            "properties": {
+              "addressPrefix": "[concat(parameters('IPRange'),'.1.0/24')]",
+              "nextHopType": "VirtualAppliance",
+              "nextHopIpAddress": "[concat(parameters('IPRange'),'.2.4')]"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "outputs": {
+
+  }
+}
