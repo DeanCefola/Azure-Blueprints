@@ -1,4 +1,7 @@
 # Manage Azure Blueprints, Import / Export
+
+..Download the Manage-AzureRMBlueprint.ps1 script
+
 To import/export Blueprints from your subscription do the following:
 
 Manage-AzureRMBlueprint.ps1 `
