@@ -1,9 +1,11 @@
 
-#**Purpose of the AMP Blueprint**
+**Purpose of the AMP Blueprint**
+============================
 	Prepare customer subscription for Migration to Azure
 
 
-#**What is the AMP Blueprint create for you:**
+**What is the AMP Blueprint create for you:**
+============================
 	Resource Groups
 		"HUB-SharedServices-RG":
 			Azure KeyVault 
@@ -16,7 +18,8 @@
 			Azure Migrate Project
 			
 
-#**Input Parameters:**
+**Input Parameters:**
+============================
 	"Organization":                "Enter your organization name (e.g. Contoso), must be unique"
 	"AzureRegion":                 "Select one Azure Region for Deployment"
 	"IPAddress_Space":             "Provide first 2 octets i.e. 10.0"	
@@ -25,7 +28,8 @@
 	"LogAnalytics_Location":       "Region used when establishing the workspace"
 
 
-#**How to Import this Blueprint**
+**How to Import this Blueprint**
+============================
 	Install-Script -Name Manage-AzureRMBlueprint `
 		-AllowPrerelease `
 		-AcceptLicense `
@@ -43,4 +47,5 @@
 		-Force
 
 
-#**END**
+**END**
+============================
