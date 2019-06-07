@@ -1,8 +1,15 @@
-** Manage Azure Blueprints, Import / Export:**
+**How to Manage Azure Blueprints, Import / Export:**
 ============================
---.Download the Manage-AzureRMBlueprint.ps1 script
+	Install-Script -Name Manage-AzureRMBlueprint `
+		-AllowPrerelease `
+		-AcceptLicense `
+		-Repository PSGallery `
+		-MinimumVersion 2.3 `
+		-Force `
+		-Verbose 
 
-** To EXPORT Blueprints from your subscription do the following:**
+
+**To EXPORT Blueprints from your subscription do the following:**
 ============================
 Manage-AzureRMBlueprint.ps1 `
     -Mode Export `
@@ -12,7 +19,8 @@ Manage-AzureRMBlueprint.ps1 `
     -ModuleMode AzureRM `
     -Verbose
 
-** To IMPORT Blueprints from your subscription do the following:**
+
+**To IMPORT Blueprints from your subscription do the following:**
 ============================
 Manage-AzureRMBlueprint.ps1 `
     -Mode Import `
@@ -21,6 +29,3 @@ Manage-AzureRMBlueprint.ps1 `
     -ModuleMode AzureRM `
     -ImportDir 'C:\temp\Azure-Governance' `
     -Force
-
-
-
