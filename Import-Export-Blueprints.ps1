@@ -26,7 +26,7 @@ Install-Script -Name Manage-AzureRMBlueprint `
 ##############################
 #    Get Subscription Info   #
 ##############################
-$SubName = 'Azure CXP FTA Internal Subscription DEACEF-2'
+$SubName = '<ENTER SUBSCRIPTION NAME>'
 $Subscription = (Get-AzureRmSubscription `
     -SubscriptionName $SubName).id
 
@@ -48,10 +48,10 @@ Manage-AzureRMBlueprint.ps1 `
 ##########################
 Manage-AzureRMBlueprint.ps1 `
     -Mode Import `
-    -NewBlueprintName Governance262019 `
+    -NewBlueprintName Governance `
     -ManagementGroupID AA-Root `
     -SubscriptionId $Subscription `
     -ModuleMode AzureRM `
-    -ImportDir 'C:\_VSTS\GitHub\Dean Cefola\Azure-Blueprints\Azure-Governance' `
+    -ImportDir 'c:\temp\Blueprint' `
     -Force
 
