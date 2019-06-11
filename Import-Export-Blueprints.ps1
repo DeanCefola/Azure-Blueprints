@@ -14,6 +14,7 @@
 
 ##########################################################
 #    Get PowerShell Script to manage Azure Blueprints    #
+#            Works only with PowerShell Core 6           #
 ##########################################################
 Install-Script -Name Manage-AzureRMBlueprint `
     -AllowPrerelease `
