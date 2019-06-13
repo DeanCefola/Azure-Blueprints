@@ -45,7 +45,7 @@ Manage-AzureRMBlueprint.ps1 `
 ##########################
 #    Import Blueprint    #
 ##########################
-$LocalPath='C:\_VSTS\GitHub\Dean Cefola\Azure-Blueprints\Azure-Governance'
+$LocalPath='C:\temp\Blueprints'
 Manage-AzureRMBlueprint.ps1 `
     -Mode Import `
     -NewBlueprintName Governance `
@@ -56,18 +56,7 @@ Manage-AzureRMBlueprint.ps1 `
     -Force
 
 
-$LocalPath='C:\_VSTS\GitHub\Dean Cefola\Azure-Blueprints\AMP'
-Manage-AzureRMBlueprint.ps1 `
-    -Mode Import `
-    -NewBlueprintName AMP `
-    -ManagementGroupID AA-Root `
-    -SubscriptionId $Subscription `
-    -ModuleMode AzureRM `
-    -ImportDir $LocalPath `
-    -Force
-
-
-######################################################
+#####################################################
 #    Clean up Unicode in your exported Blueprints    #
 ######################################################
 $Path = 'C:\temp\Blueprint'
