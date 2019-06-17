@@ -191,5 +191,5 @@
     },
     "description": "Azure Migration Project"
   },
-    "type":  "Microsoft.Blueprint/blueprints"
+  "type": "Microsoft.Blueprint/blueprints"
 }
