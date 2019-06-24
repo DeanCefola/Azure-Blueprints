@@ -1,0 +1,103 @@
+{
+  "kind": "template",
+  "properties": {
+    "displayName": "Deploy HUB vNET",
+    "description": "Deploy HUB vNET ",
+    "dependsOn": [],
+    "template": {
+      "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "Organization": {
+          "type": "string"
+        },
+        "IPAddress_Space": {
+          "type": "string"
+        }
+      },
+      "variables": {
+        "vNET_Info": [
+          {
+            "vNET_Name": "[concat(parameters('Organization'), '-WebDemo-vNET')]",
+            "vNET_AddressSpace": "[concat(parameters('IPAddress_Space'),'.0.0/16')]",
+            "vNET_Subnet_WEB_Name": "Web",
+            "vNET_Subnet_WEB_CIDR": "[concat(parameters('IPAddress_Space'),'.0.128/27')]",
+            "vNET_Subnet_WEB_NSG": "[concat(parameters('Organization'), '-Web-NSG')]",
+            "vNET_Subnet_APP_Name": "App",
+            "vNET_Subnet_APP_CIDR": "[concat(parameters('IPAddress_Space'),'.0.160/27')]",
+            "vNET_Subnet_App_NSG": "[concat(parameters('Organization'), '-App-NSG')]",
+            "vNET_Subnet_DB_Name": "Database",
+            "vNET_Subnet_DB_CIDR": "[concat(parameters('IPAddress_Space'),'.0.192/27')]",
+            "vNET_Subnet_DB_NSG": "[concat(parameters('Organization'), '-Database-NSG')]"
+          }
+        ]
+      },
+      "resources": [
+        {
+          "type": "Microsoft.Network/virtualNetworks",
+          "name": "[variables('vNET_Info')[copyIndex()].vNET_Name]",
+          "apiVersion": "2017-08-01",
+          "location": "[resourceGroup().location]",
+          "copy": {
+            "name": "vNET_Copy",
+            "count": "[length(variables('vNET_Info'))]"
+          },
+          "tags": {
+            "displayName": "Virtual Network"
+          },
+          "properties": {
+            "addressSpace": {
+              "addressPrefixes": [
+                "[variables('vNET_Info')[copyIndex()].vNET_AddressSpace]"
+              ]
+            },
+            "subnets": [
+              {
+                "name": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_WEB_Name]",
+                "properties": {
+                  "addressPrefix": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_WEB_CIDR]"
+                }
+              },
+              {
+                "name": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_APP_Name]",
+                "properties": {
+                  "addressPrefix": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_APP_CIDR]"
+                }
+              },
+              {
+                "name": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_DB_Name]",
+                "properties": {
+                  "addressPrefix": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_DB_CIDR]"
+                }
+              }
+            ]
+          },
+          "dependsOn": []
+        }
+      ],
+      "outputs": {
+        "vNETRef_Web": {
+          "type": "string",
+          "value": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', concat(parameters('Organization'), '-WebDemo-vNET'), 'Web')]"
+        },
+        "vNETRef_App": {
+          "type": "string",
+          "value": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', concat(parameters('Organization'), '-WebDemo-vNET'), 'App')]"
+        },
+        "vNETRef_Database": {
+          "type": "string",
+          "value": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', concat(parameters('Organization'), '-WebDemo-vNET'), 'Database')]"
+        }
+      }
+    },
+    "resourceGroup": "Network-RG",
+    "parameters": {
+      "Organization": {
+        "value": "[parameters('Organization')]"
+      },
+      "IPAddress_Space": {
+        "value": "[parameters('HUB-vNET-AddressSpace')]"
+      }
+    }
+  }
+}
