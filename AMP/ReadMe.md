@@ -28,23 +28,29 @@
 	"LogAnalytics_Location":       "Region used when establishing the workspace"
 
 
-**How to Import this Blueprint**
+**How to Manage Azure Blueprints, Import / Export:**
 ============================
-	Install-Script -Name Manage-AzureRMBlueprint `
-		-AllowPrerelease `
-		-AcceptLicense `
-		-Repository PSGallery `
-		-MinimumVersion 2.3 `
-		-Force `
-		-Verbose 
+Install-Module -Name Az.Blueprint `
+    -Repository PSGallery `
+    -MinimumVersion 0.2.0 `
+    -AllowClobber `
+    -Force `
+    -Verbose
+Import-Module `
+    -Name Az.Blueprint
 
-	Manage-AzureRMBlueprint.ps1 `
-		-Mode Import `
-		-NewBlueprintName Governance `
-		-SubscriptionId 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx' `
-		-ModuleMode AzureRM `
-		-ImportDir 'C:\temp\Blueprint\Governance' `
-		-Force
+
+**To IMPORT Blueprints from your subscription do the following:**
+============================
+$LocalPath='C:\temp\Blueprint\AMP'
+$BPName = $LocalPath.Split('\') | select -Last 1
+Import-AzBlueprintWithArtifact `
+    -Name $BPName `
+    -InputPath $LocalPath `
+    -SubscriptionId xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx `
+    -Force `
+    -Verbose
+
 
 
 **END**
