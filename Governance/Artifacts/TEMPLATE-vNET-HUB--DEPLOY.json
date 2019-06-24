@@ -1,0 +1,108 @@
+{
+  "properties": {
+    "template": {
+      "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "Organization": {
+          "type": "string"
+        },
+        "IPAddress_Space": {
+          "type": "string"
+        }
+      },
+      "variables": {
+        "vNET_Info": [
+          {
+            "vNET_Name": "[concat(parameters('Organization'), '-HUB-vNET')]",
+            "vNET_AddressSpace": "[concat(parameters('IPAddress_Space'),'.0.0/16')]",
+            "vNET_Subnet_IDENTITY_Name": "Identity",
+            "vNET_Subnet_IDENTITY_CIDR": "[concat(parameters('IPAddress_Space'),'.0.128/27')]",
+            "vNET_Subnet_IDENTITY_NSG": "[concat(parameters('Organization'), '-Identity-NSG')]",
+            "vNET_Subnet_SHARED_Name": "Shared",
+            "vNET_Subnet_SHARED_CIDR": "[concat(parameters('IPAddress_Space'),'.0.160/27')]",
+            "vNET_Subnet_SHARED_NSG": "[concat(parameters('Organization'), '-Shared-NSG')]",
+            "vNET_Subnet_FIREWALL_Name": "AzureFirewall",
+            "vNET_Subnet_FIREWALL_CIDR": "[concat(parameters('IPAddress_Space'),'.0.192/27')]",
+            "vNET_Subnet_FIREWALL_NSG": "[concat(parameters('Organization'), '-AzureFirewall-NSG')]"
+          }
+        ]
+      },
+      "resources": [
+        {
+          "type": "Microsoft.Network/virtualNetworks",
+          "name": "[variables('vNET_Info')[copyIndex()].vNET_Name]",
+          "apiVersion": "2017-08-01",
+          "location": "[resourceGroup().location]",
+          "copy": {
+            "name": "vNET_Copy",
+            "count": "[length(variables('vNET_Info'))]"
+          },
+          "tags": {
+            "displayName": "Virtual Network"
+          },
+          "properties": {
+            "addressSpace": {
+              "addressPrefixes": [
+                "[variables('vNET_Info')[copyIndex()].vNET_AddressSpace]"
+              ]
+            },
+            "subnets": [
+              {
+                "name": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_Identity_Name]",
+                "properties": {
+                  "addressPrefix": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_IDENTITY_CIDR]"
+                }
+              },
+              {
+                "name": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_SHARED_Name]",
+                "properties": {
+                  "addressPrefix": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_SHARED_CIDR]"
+                }
+              },
+              {
+                "name": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_FIREWALL_Name]",
+                "properties": {
+                  "addressPrefix": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_FIREWALL_CIDR]"
+                }
+              }
+            ]
+          },
+          "dependsOn": [
+
+          ]
+        }
+      ],
+      "outputs": {
+        "vNETRef_Identity": {
+          "type": "string",
+          "value": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', concat(parameters('Organization'), '-HUB-vNET'), 'Identity')]"
+        },
+        "vNETRef_Shared": {
+          "type": "string",
+          "value": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', concat(parameters('Organization'), '-HUB-vNET'), 'Shared')]"
+        },
+        "vNETRef_Firewall": {
+          "type": "string",
+          "value": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', concat(parameters('Organization'), '-HUB-vNET'), 'Firewall')]"
+        }
+      }
+    },
+    "parameters": {
+      "Organization": {
+        "value": "[parameters('Organization')]"
+      },
+      "IPAddress_Space": {
+        "value": "[parameters('HUB-vNET-AddressSpace')]"
+      }
+    },
+    "dependsOn": [
+
+    ],
+    "resourceGroup": "Network-RG",
+    "displayName": "Deploy HUB vNET",
+    "description": "Deploy HUB vNET "
+  },
+  "kind": "template",
+  "type": "Microsoft.Blueprint/blueprints/artifacts"
+}
