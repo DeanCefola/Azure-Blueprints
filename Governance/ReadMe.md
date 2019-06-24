@@ -6,28 +6,28 @@ The Azure Governance Blueprint is a set of controls to help you manage your clou
 		
 **What The Governance Blueprint will create for you:**
 ============================
-Azure Resource Groups
-      "HUB-SharedServices-RG": 
-      "HUB-Identity-RG": 
-      "Network-RG": 
-      "Application-RG": 
-Azure Policy
-	Definitions
-		Tagging (CostCenter)
-			Tag Resource Group
-			Append resources in the resource group with the CostCenter Tag
-		Allowed Azure Region for Resources
-		Allowed Storage Account SKUs
-		Allowed Azure VM SKUs			
-		Require Network Watch to be deployed 
-		Require Azure Storage Account Secure transfer Encryption
-	Initiatives
-		Enable Monitoring in Azure Security Center (78 Policies)			
-Azure Templates
-	Deploy Azure Key Vault 
-	Deploy Azure Log Analytics Workspace
-	Deploy Azure Security Center Standard
-	Deploy Azure Virtual Network Hub
+	Azure Resource Groups
+		  "HUB-SharedServices-RG": 
+		  "HUB-Identity-RG": 
+		  "Network-RG": 
+		  "Application-RG": 
+	Azure Policy
+		Definitions
+			Tagging (CostCenter)
+				Tag Resource Group
+				Append resources in the resource group with the CostCenter Tag
+			Allowed Azure Region for Resources
+			Allowed Storage Account SKUs
+			Allowed Azure VM SKUs			
+			Require Network Watch to be deployed 
+			Require Azure Storage Account Secure transfer Encryption
+		Initiatives
+			Enable Monitoring in Azure Security Center (78 Policies)			
+	Azure Templates
+		Deploy Azure Key Vault 
+		Deploy Azure Log Analytics Workspace
+		Deploy Azure Security Center Standard
+		Deploy Azure Virtual Network Hub
 
 			
 **Input Parameters:**
