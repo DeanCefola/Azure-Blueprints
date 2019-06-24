@@ -2,32 +2,34 @@
 **Purpose of The Governance Blueprint**
 ============================
 The Azure Governance Blueprint is a set of controls to help you manage your cloud estate
-This will cover areas like:
-	Resource Groups,
-	Azure Monitor,
-	Azure Policy:
-		Allowed Azure Regions
-		Allowed
 
-
-**What is the AMP Blueprint create for you:**
+		
+**What The Governance Blueprint will create for you:**
 ============================
-Resource Groups
+Azure Resource Groups
       "HUB-SharedServices-RG": 
       "HUB-Identity-RG": 
       "Network-RG": 
       "Application-RG": 
-	Azure Policy
-		Definitions
-			Tagging (CostCenter)
-				Tag Resource Group
-				Append resources in the resource group with the CostCenter Tag
-		Initiatives
-			Enable Monitoring in Azure Security Center (78 Policies)
-			LogAnalytics
+Azure Policy
+	Definitions
+		Tagging (CostCenter)
+			Tag Resource Group
+			Append resources in the resource group with the CostCenter Tag
+		Allowed Azure Region for Resources
+		Allowed Storage Account SKUs
+		Allowed Azure VM SKUs			
+		Require Network Watch to be deployed 
+		Require Azure Storage Account Secure transfer Encryption
+	Initiatives
+		Enable Monitoring in Azure Security Center (78 Policies)			
+Azure Templates
+	Deploy Azure Key Vault 
+	Deploy Azure Log Analytics Workspace
+	Deploy Azure Security Center Standard
+	Deploy Azure Virtual Network Hub
 
 			
-
 **Input Parameters:**
 ============================
 	"Organization":							"Enter your organization name (e.g. Contoso), must be unique"

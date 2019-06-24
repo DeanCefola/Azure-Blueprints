@@ -1,9 +1,5 @@
 {
-  "kind": "template",
   "properties": {
-    "displayName": "Deploy HUB vNET",
-    "description": "Deploy HUB vNET ",
-    "dependsOn": [],
     "template": {
       "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
       "contentVersion": "1.0.0.0",
@@ -18,17 +14,20 @@
       "variables": {
         "vNET_Info": [
           {
-            "vNET_Name": "[concat(parameters('Organization'), '-WebDemo-vNET')]",
+            "vNET_Name": "[concat(parameters('Organization'), '-AMP-vNET')]",
             "vNET_AddressSpace": "[concat(parameters('IPAddress_Space'),'.0.0/16')]",
-            "vNET_Subnet_WEB_Name": "Web",
-            "vNET_Subnet_WEB_CIDR": "[concat(parameters('IPAddress_Space'),'.0.128/27')]",
-            "vNET_Subnet_WEB_NSG": "[concat(parameters('Organization'), '-Web-NSG')]",
-            "vNET_Subnet_APP_Name": "App",
-            "vNET_Subnet_APP_CIDR": "[concat(parameters('IPAddress_Space'),'.0.160/27')]",
-            "vNET_Subnet_App_NSG": "[concat(parameters('Organization'), '-App-NSG')]",
-            "vNET_Subnet_DB_Name": "Database",
-            "vNET_Subnet_DB_CIDR": "[concat(parameters('IPAddress_Space'),'.0.192/27')]",
-            "vNET_Subnet_DB_NSG": "[concat(parameters('Organization'), '-Database-NSG')]"
+            "vNET_Subnet_GATEWAY_Name": "GatewaySubnet",
+            "vNET_Subnet_GATEWAY_CIDR": "[concat(parameters('IPAddress_Space'),'.0.0/26')]",
+            "vNET_Subnet_GATEWAY_NSG": "[concat(parameters('Organization'), '-GatewaySubnet-NSG')]",
+            "vNET_Subnet_FIREWALL_Name": "AzureFirewallSubnet",
+            "vNET_Subnet_FIREWALL_CIDR": "[concat(parameters('IPAddress_Space'),'.0.64/26')]",
+            "vNET_Subnet_FIREWALL_NSG": "[concat(parameters('Organization'), '-AzureFirewall-NSG')]",
+            "vNET_Subnet_JUMPBOX_Name": "JumpboxSubnet",
+            "vNET_Subnet_JUMPBOX_CIDR": "[concat(parameters('IPAddress_Space'),'.0.128/26')]",
+            "vNET_Subnet_JUMPBOX_NSG": "[concat(parameters('Organization'), '-Jumpbox-NSG')]",
+            "vNET_Subnet_LANDINGZONE_Name": "LandingZone",
+            "vNET_Subnet_LANDINGZONE_CIDR": "[concat(parameters('IPAddress_Space'),'.4.0/22')]",
+            "vNET_Subnet_LANDINGZONE_NSG": "[concat(parameters('Organization'), '-LandingZone-NSG')]"
           }
         ]
       },
@@ -53,51 +52,89 @@
             },
             "subnets": [
               {
-                "name": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_WEB_Name]",
+                "name": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_GATEWAY_Name]",
                 "properties": {
-                  "addressPrefix": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_WEB_CIDR]"
+                  "addressPrefix": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_GATEWAY_CIDR]"
                 }
               },
               {
-                "name": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_APP_Name]",
+                "name": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_FIREWALL_Name]",
                 "properties": {
-                  "addressPrefix": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_APP_CIDR]"
+                  "addressPrefix": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_FIREWALL_CIDR]"
                 }
               },
               {
-                "name": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_DB_Name]",
+                "name": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_JUMPBOX_Name]",
                 "properties": {
-                  "addressPrefix": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_DB_CIDR]"
+                  "addressPrefix": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_JUMPBOX_CIDR]"
+                }
+              },
+              {
+                "name": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_LANDINGZONE_Name]",
+                "properties": {
+                  "addressPrefix": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_LANDINGZONE_CIDR]"
                 }
               }
+
             ]
           },
-          "dependsOn": []
+          "dependsOn": [
+
+          ]
+        },
+        {
+          "type": "Microsoft.Network/virtualNetworks/providers/locks",
+          "apiVersion": "2016-09-01",
+          "name": "[concat(variables('vNET_Info')[copyIndex()].vNET_Name, '/Microsoft.Authorization/AzureVNetDoNotDelete')]",
+          "copy": {
+            "name": "vNETLock_Copy",
+            "count": "[length(variables('vNET_Info'))]"
+          },
+          "dependsOn": [
+            "vNET_Copy"
+          ],
+          "comments": "Resource lock on Azure LandingZone vNET",
+          "properties": {
+            "level": "CannotDelete"
+          }
         }
       ],
       "outputs": {
-        "vNETRef_Web": {
+        "vNETRef_Gateway": {
           "type": "string",
-          "value": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', concat(parameters('Organization'), '-WebDemo-vNET'), 'Web')]"
+          "value": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', concat(parameters('Organization'), '-AMP-vNET'), 'GatewaySubnet')]"
         },
-        "vNETRef_App": {
+        "vNETRef_Firewall": {
           "type": "string",
-          "value": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', concat(parameters('Organization'), '-WebDemo-vNET'), 'App')]"
+          "value": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', concat(parameters('Organization'), '-AMP-vNET'), 'AzureFirewallSubnet')]"
         },
-        "vNETRef_Database": {
+        "vNETRef_JumpBox": {
           "type": "string",
-          "value": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', concat(parameters('Organization'), '-WebDemo-vNET'), 'Database')]"
+          "value": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', concat(parameters('Organization'), '-AMP-vNET'), 'JumpboxSubnet')]"
+        },
+        "vNETRef_LandingZone": {
+          "type": "string",
+          "value": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', concat(parameters('Organization'), '-AMP-vNET'), 'LandingZone')]"
         }
+
+
       }
     },
-    "resourceGroup": "Network-RG",
     "parameters": {
       "Organization": {
         "value": "[parameters('Organization')]"
       },
       "IPAddress_Space": {
-        "value": "[parameters('HUB-vNET-AddressSpace')]"
+        "value": "[parameters('IPAddress_Space')]"
       }
-    }
-  }
+    },
+    "dependsOn": [
+
+    ],
+    "resourceGroup": "Network-RG",
+    "displayName": "Deploy vNET Landing Zone",
+    "description": "Landing Zone has 4 subnets, Gateway, AzureFirewall, JumpServer, LandingZone for Migrated VMs"
+  },
+  "kind": "template",
+  "type": "Microsoft.Blueprint/blueprints/artifacts"
 }
