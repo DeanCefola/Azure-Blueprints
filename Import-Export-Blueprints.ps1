@@ -1,4 +1,4 @@
-﻿  <#Author   : Dean Cefola
+  <#Author   : Dean Cefola
 # Creation Date: 05-20-2019
 # Usage      : AZURE Blueprint - Export and Import as Code 
 
@@ -12,17 +12,6 @@
 #>
 
 
-##########################################################
-#    Get PowerShell Script to manage Azure Blueprints    #
-##########################################################
-Install-Script -Name Manage-AzureRMBlueprint `
-    -AllowPrerelease `
-    -AcceptLicense `
-    -Repository PSGallery `
-    -MinimumVersion 2.3 `
-    -Force `
-    -Verbose 
-
 ##############################
 #    Get Subscription Info   #
 ##############################
@@ -31,13 +20,23 @@ $Subscription = (Get-AzureRmSubscription `
     -SubscriptionName $SubName).id
 
 
+##########################################################
+#    Get PowerShell Script to manage Azure Blueprints    #
+##########################################################
+Install-Script -Name Manage-AzureRMBlueprint `
+    -Repository PSGallery `
+    -MinimumVersion 2.3 `
+    -Force `
+    -Verbose 
+
+    
 ##########################
 #    Export Blueprint    #
 ##########################
 Manage-AzureRMBlueprint.ps1 `
     -Mode Export `
-    -BlueprintName Governance `
-    -ExportDir c:\temp\Blueprint `
+    -BlueprintName ISO27001 `
+    -ExportDir C:\temp\Blueprint `
     -SubscriptionId $Subscription `
     -ModuleMode AzureRM `
     -Verbose
@@ -46,12 +45,24 @@ Manage-AzureRMBlueprint.ps1 `
 ##########################
 #    Import Blueprint    #
 ##########################
+$LocalPath='C:\temp\Blueprints'
 Manage-AzureRMBlueprint.ps1 `
     -Mode Import `
     -NewBlueprintName Governance `
     -ManagementGroupID AA-Root `
     -SubscriptionId $Subscription `
     -ModuleMode AzureRM `
-    -ImportDir 'c:\temp\Blueprint' `
+    -ImportDir $LocalPath `
     -Force
+
+
+#####################################################
+#    Clean up Unicode in your exported Blueprints    #
+######################################################
+$Path = 'C:\temp\Blueprint'
+$configFiles = Get-ChildItem $Path *.json -Recurse
+foreach ($File in $configFiles) {    
+    $Content = [System.IO.File]::ReadAllText($File.FullName).Replace("\u0027","'")
+    [System.IO.File]::WriteAllText($File.FullName, $Content)
+}
 
