@@ -11,7 +11,7 @@
       "AzureRegion": {
         "type": "string",
         "metadata": {
-          "displayName": "Select one Azure Region for Deployment"
+          "displayName": "Select the Azure Region to deploy the AMP Resources"
         },
         "defaultValue": "eastus",
         "allowedValues": [
