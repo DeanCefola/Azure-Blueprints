@@ -33,8 +33,7 @@
             "vNET_Subnet_CORE_NSG": "[concat(parameters('Organization'), '-Core-NSG')]",
             "vNET_Subnet_CORE_REF": "[concat(parameters('Organization'), '-AMP-vNET', '/Core')]"
           }
-        ],
-        "Subnet_Test": "[concat('msdea909-AMP-vNET', '/test')]"
+        ]        
       },
       "resources": [
         {
@@ -122,29 +121,6 @@
           "properties": {
             "level": "CannotDelete"
           }
-        },
-        {
-          "type": "Microsoft.Network/virtualNetworks/subnets",
-          "apiVersion": "2019-04-01",
-          "name": "[concat('msdea909-AMP-vNET', '/test')]",
-          "dependsOn": [
-
-          ],
-          "properties": {
-            "addressPrefix": "10.10.8.0/24",
-            "serviceEndpoints": [
-              {
-                "service": "Microsoft.Storage",
-                "locations": [
-                  "eastus",
-                  "westus"
-                ]
-              }
-            ],
-            "delegations": [
-
-            ]
-          }
         }
       ],
       "outputs": {
@@ -162,7 +138,7 @@
         },
         "vNETRef_Test": {
           "type": "string",
-          "value": "[reference(variables('Subnet_Test'), '2017-08-01', 'Full').resourceId]"
+          "value": "[reference(concat(parameters('Organization'), '-AMP-vNET'), '2019-04-01', 'Full').resourceId]"
         }
       }
     },
