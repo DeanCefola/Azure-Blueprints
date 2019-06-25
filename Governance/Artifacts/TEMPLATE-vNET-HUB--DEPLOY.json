@@ -160,7 +160,7 @@
           "type": "string",
           "value": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', concat(parameters('Organization'), '-AMP-vNET'), 'JumpboxSubnet')]"
         },
-        "vNETRef_Core": {
+        "vNETRef_Test": {
           "type": "string",
           "value": "[reference(variables('Subnet_Test'), '2017-08-01', 'Full').resourceId]"
         }

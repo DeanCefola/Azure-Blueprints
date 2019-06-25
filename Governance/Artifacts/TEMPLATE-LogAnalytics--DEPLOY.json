@@ -163,7 +163,7 @@
         "value": "[parameters('LogAnalytics_Location')]"
       },
       "BP_vNETRef_Core": {
-        "value": "[artifacts('TEMPLATE-vNET-HUB--DEPLOY').outputs.vNETRef_Core]"
+        "value": "[artifacts('TEMPLATE-vNET-HUB--DEPLOY').outputs.vNETRef_Test]"
       }
     }
   }
