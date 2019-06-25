@@ -6,6 +6,7 @@
 # Date                         Version      Changes
 #------------------------------------------------------------------------------
 # 05/20/2019                       1.0       Intial Version
+# 06/25/2019                       2.0       Convert to Az.Blueprint modules
 #
 #******************************************************************************
 #
@@ -15,54 +16,49 @@
 ##############################
 #    Get Subscription Info   #
 ##############################
+$MgmtName = '<ENTER MANAGEMENT GROUP NAME>'
 $SubName = '<ENTER SUBSCRIPTION NAME>'
-$Subscription = (Get-AzureRmSubscription `
+$SubID = (Get-AzSubscription `
     -SubscriptionName $SubName).id
+$MgmtID = (Get-AzManagementGroup -GroupName $MgmtName).id.Split('/')[4]
 
 
 ##########################################################
 #    Get PowerShell Script to manage Azure Blueprints    #
 ##########################################################
-Install-Script -Name Manage-AzureRMBlueprint `
+Install-Module -Name Az.Blueprint `
     -Repository PSGallery `
-    -MinimumVersion 2.3 `
+    -MinimumVersion 0.2.0 `
+    -AllowClobber `
     -Force `
-    -Verbose 
+    -Verbose
+Import-Module `
+    -Name Az.Blueprint
 
-    
+
 ##########################
 #    Export Blueprint    #
 ##########################
-Manage-AzureRMBlueprint.ps1 `
-    -Mode Export `
-    -BlueprintName ISO27001 `
-    -ExportDir C:\temp\Blueprint `
-    -SubscriptionId $Subscription `
-    -ModuleMode AzureRM `
+$BPName = 'Test'
+$LocalPath = 'C:\temp\Blueprint'
+$BP = Get-AzBlueprint -ManagementGroupId $MgmtID | Where-Object -Property Name -EQ $BPName
+$BPVersion = $BP.Versions | select -Last 1
+Export-AzBlueprintWithArtifact `
+    -Blueprint $BP `
+    -OutputPath $LocalPath `
+    -Version $BPVersion `
+    -Force `
     -Verbose
 
 
 ##########################
 #    Import Blueprint    #
 ##########################
-$LocalPath='C:\temp\Blueprints'
-Manage-AzureRMBlueprint.ps1 `
-    -Mode Import `
-    -NewBlueprintName Governance `
-    -ManagementGroupID AA-Root `
-    -SubscriptionId $Subscription `
-    -ModuleMode AzureRM `
-    -ImportDir $LocalPath `
-    -Force
-
-
-#####################################################
-#    Clean up Unicode in your exported Blueprints    #
-######################################################
-$Path = 'C:\temp\Blueprint'
-$configFiles = Get-ChildItem $Path *.json -Recurse
-foreach ($File in $configFiles) {    
-    $Content = [System.IO.File]::ReadAllText($File.FullName).Replace("\u0027","'")
-    [System.IO.File]::WriteAllText($File.FullName, $Content)
-}
-
+$LocalPath='C:\temp\Blueprint\AMP'
+$BPName = $LocalPath.Split('\') | select -Last 1
+Import-AzBlueprintWithArtifact `
+    -Name $BPName `
+    -InputPath $LocalPath `
+    -SubscriptionId $SubID `
+    -Force `
+    -Verbose
