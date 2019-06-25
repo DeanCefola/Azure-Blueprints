@@ -7,7 +7,7 @@
         "Organization": {
           "type": "string"
         },
-        "IPAddress_Space": {
+        "HUB-vNET-AddressSpace": {
           "type": "string"
         }
       },
@@ -15,7 +15,7 @@
         "vNET_Info": [
           {
             "vNET_Name": "[concat(parameters('Organization'), '-AMP-vNET')]",
-            "vNET_AddressSpace": "[concat(parameters('IPAddress_Space'),'.0.0/16')]",
+            "vNET_AddressSpace": "[concat(parameters('HUB-vNET-AddressSpace'),'.0.0/16')]",
             "vNET_Subnet_GATEWAY_Name": "GatewaySubnet",
             "vNET_Subnet_GATEWAY_CIDR": "[concat(parameters('IPAddress_Space'),'.0.0/26')]",
             "vNET_Subnet_GATEWAY_NSG": "[concat(parameters('Organization'), '-GatewaySubnet-NSG')]",
@@ -124,8 +124,8 @@
       "Organization": {
         "value": "[parameters('Organization')]"
       },
-      "IPAddress_Space": {
-        "value": "[parameters('IPAddress_Space')]"
+      "HUB-vNET-AddressSpace": {
+        "value": "[parameters('HUB-vNET-AddressSpace')]"
       }
     },
     "dependsOn": [

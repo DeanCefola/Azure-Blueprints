@@ -7,8 +7,8 @@ The Azure Governance Blueprint is a set of controls to help you manage your clou
 **What The Governance Blueprint will create for you:**
 ============================
 	Azure Resource Groups
-		  "HUB-SharedServices-RG": 
-		  "HUB-Identity-RG": 
+		  "SharedServices-RG": 
+		  "Identity-RG": 
 		  "Network-RG": 
 		  "Application-RG": 
 	Azure Policy
@@ -18,7 +18,8 @@ The Azure Governance Blueprint is a set of controls to help you manage your clou
 				Append resources in the resource group with the CostCenter Tag
 			Allowed Azure Region for Resources
 			Allowed Storage Account SKUs
-			Allowed Azure VM SKUs			
+			Allowed Azure VM SKUs	
+			Allowed Azure Resource Types
 			Require Network Watch to be deployed 
 			Require Azure Storage Account Secure transfer Encryption
 		Initiatives
@@ -37,6 +38,7 @@ The Azure Governance Blueprint is a set of controls to help you manage your clou
     "Policy_Allowed-Locations":				"Which Azure Regions will you allow resources to be built in?"
     "Policy_Allowed-VM-SKUs":				"Allowed virtual machine SKUs"
     "Policy_Allowed-StorageAccount-SKUs":	"SKU used in Diagnostic Log storage accounts"
+	"Policy_Allowed-Resource-Types":		"Which Azure Resources you want to allow in your environment "
     "Policy_CostCenter_Tag":				"Append CostCenter TAG & its value from the Resource Group"
     "LocalAdmin-Username":					"KeyVault-Secret LocalAdmin Username"
     "Local-Admin-Password":					"KeyVault-Secret LocalAdmin Password"

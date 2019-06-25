@@ -9,7 +9,7 @@
         "metadata": {
           "displayName": "Enter your organization name (e.g. Contoso), must be unique"
         },
-        "defaultValue": "contoso"
+        "defaultValue": ""
       },
       "HUB-RG-Location": {
         "type": "string",
@@ -90,7 +90,8 @@
           "France South",
           "Australia Central",
           "Australia Central 2"
-        ]
+        ],
+        "strongType": "location"
       },
       "Policy_Allowed-VM-SKUs": {
         "type": "array",
@@ -268,7 +269,7 @@
           "Standard_NV12s_v2",
           "Standard_NV24",
           "Standard_NV24s_v2"
-        ]
+        ]        
       },
       "Policy_Allowed-StorageAccount-SKUs": {
         "type": "array",
@@ -288,6 +289,14 @@
           "Standard_ZRS"
         ]
       },
+      "Policy_Allowed-Resource-Types": {
+        "type": "array",
+        "metadata": {
+          "displayName": "Allowed resource types",
+          "description": "The list of resource types that can be deployed.",
+          "strongType": "resourceTypes"
+        }
+      },
       "Policy_CostCenter_Tag": {
         "type": "string",
         "metadata": {
@@ -298,7 +307,7 @@
       "KeyVault-user-id": {
         "type": "string",
         "metadata": {
-          "displayName": "KeyVault-Permissions",
+          "displayName": "KeyVault-User Access will be granted to an Azure AD Object ID i.e. (abc123de-f456-ghi7-89jk-l0mno123pqr4)",
           "description": "AAD object ID of the user that requires access to Key Vault."
         },
         "allowedValues": []
