@@ -3,7 +3,6 @@
   "properties": {
     "displayName": "Deploy Log Analytics",
     "description": "Deploy Log Analytics for Diagnostics",
-    "dependsOn": [],
     "template": {
       "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
       "contentVersion": "1.0.0.0",
@@ -67,8 +66,7 @@
         "uniqueString": "[uniqueString(subscription().id, concat(variables('deployment-prefix'), '-log'))]",
         "diagnostic-storageAccount-prefix": "[concat(replace(variables('deployment-prefix'), '-', ''), 'diag')]",
         "diagnostic-storageAccount-name": "[toLower(substring(replace(concat(variables('diagnostic-storageAccount-prefix'), variables('uniqueString'), variables('uniqueString')), '-', ''), 0, 23) )]",
-        "oms-workspace-name": "[concat(variables('deployment-prefix'), '-log')]",
-        "virtualNetwork": "/subscriptions/25603d65-4ffd-4496-815d-417e73e71da3/resourceGroups/msdean91-VNet-rg/providers/Microsoft.Network/virtualNetworks/msdean91-AMP-vNET"
+        "oms-workspace-name": "[concat(variables('deployment-prefix'), '-log')]"
       },
       "resources": [
         {
@@ -97,27 +95,27 @@
               }
             },
             "networkAcls": {
-                "bypass": "AzureServices",
-                "virtualNetworkRules": [
-                  {
-                    "id": "[concat(parameters('virtualNetwork'), '/subnets/AzureFirewallSubnet')]",
-                    "action": "Allow"
-                  },
-                  {
-                    "id": "[concat(parameters('virtualNetwork'), '/subnets/GatewaySubnet')]",
-                    "action": "Allow"
-                  },
-                  {
-                    "id": "[concat(parameters('virtualNetwork'), '/subnets/JumpboxSubnet')]",
-                    "action": "Allow"
-                  },
-                  {
-                    "id": "[concat(parameters('virtualNetwork'), '/subnets/Core')]",
-                    "action": "Allow"
-                  }
-                ],
-                "ipRules": [],
-                "defaultAction": "Deny"
+              "bypass": "AzureServices",
+              "virtualNetworkRules": [
+                {
+                  "id": "[concat(parameters('virtualNetwork'), '/subnets/AzureFirewallSubnet')]",
+                  "action": "Allow"
+                },
+                {
+                  "id": "[concat(parameters('virtualNetwork'), '/subnets/GatewaySubnet')]",
+                  "action": "Allow"
+                },
+                {
+                  "id": "[concat(parameters('virtualNetwork'), '/subnets/JumpboxSubnet')]",
+                  "action": "Allow"
+                },
+                {
+                  "id": "[concat(parameters('virtualNetwork'), '/subnets/Core')]",
+                  "action": "Allow"
+                }
+              ],
+              "ipRules": [],
+              "defaultAction": "Deny"
             },
             "supportsHttpsTrafficOnly": true
           }
@@ -180,6 +178,9 @@
       "BP_vNETRef_Core": {
         "value": "[artifacts('TEMPLATE-vNET-HUB--DEPLOY').outputs.vNETRef_Test]"
       }
-    }
+    },
+    "dependsOn": [
+
+    ]
   }
 }
