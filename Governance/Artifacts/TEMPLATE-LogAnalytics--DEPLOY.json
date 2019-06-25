@@ -54,6 +54,12 @@
             "displayName": "Location",
             "description": "Region used when establishing the workspace"
           }
+        },
+        "BP_vNETRef_Core": {
+          "type": "string",
+          "metadata": {
+            "description": "virtual network Subnet - Migration"
+          }
         }
       },
       "variables": {
@@ -88,6 +94,17 @@
                   "enabled": true
                 }
               }
+            },
+            "networkAcls": {
+              "bypass": "AzureServices",
+              "virtualNetworkRules": [
+                {
+                  "id": "[parameters('BP_vNETRef_Core')]",
+                  "action": "Allow"
+                }
+              ],
+              "ipRules": [],
+              "defaultAction": "Deny"
             },
             "supportsHttpsTrafficOnly": true
           }
@@ -144,6 +161,9 @@
       },
       "location": {
         "value": "[parameters('LogAnalytics_Location')]"
+      },
+      "BP_vNETRef_Core": {
+        "value": "[artifacts('TEMPLATE-vNET-HUB--DEPLOY').outputs.vNETRef_Core]"
       }
     }
   }
