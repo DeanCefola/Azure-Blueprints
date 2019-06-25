@@ -17,16 +17,16 @@
             "vNET_Name": "[concat(parameters('Organization'), '-AMP-vNET')]",
             "vNET_AddressSpace": "[concat(parameters('HUB-vNET-AddressSpace'),'.0.0/16')]",
             "vNET_Subnet_GATEWAY_Name": "GatewaySubnet",
-            "vNET_Subnet_GATEWAY_CIDR": "[concat(parameters('IPAddress_Space'),'.0.0/26')]",
+            "vNET_Subnet_GATEWAY_CIDR": "[concat(parameters('HUB-vNET-AddressSpace'),'.0.0/26')]",
             "vNET_Subnet_GATEWAY_NSG": "[concat(parameters('Organization'), '-GatewaySubnet-NSG')]",
             "vNET_Subnet_FIREWALL_Name": "AzureFirewallSubnet",
-            "vNET_Subnet_FIREWALL_CIDR": "[concat(parameters('IPAddress_Space'),'.0.64/26')]",
+            "vNET_Subnet_FIREWALL_CIDR": "[concat(parameters('HUB-vNET-AddressSpace'),'.0.64/26')]",
             "vNET_Subnet_FIREWALL_NSG": "[concat(parameters('Organization'), '-AzureFirewall-NSG')]",
             "vNET_Subnet_JUMPBOX_Name": "JumpboxSubnet",
-            "vNET_Subnet_JUMPBOX_CIDR": "[concat(parameters('IPAddress_Space'),'.0.128/26')]",
+            "vNET_Subnet_JUMPBOX_CIDR": "[concat(parameters('HUB-vNET-AddressSpace'),'.0.128/26')]",
             "vNET_Subnet_JUMPBOX_NSG": "[concat(parameters('Organization'), '-Jumpbox-NSG')]",
             "vNET_Subnet_LANDINGZONE_Name": "LandingZone",
-            "vNET_Subnet_LANDINGZONE_CIDR": "[concat(parameters('IPAddress_Space'),'.4.0/22')]",
+            "vNET_Subnet_LANDINGZONE_CIDR": "[concat(parameters('HUB-vNET-AddressSpace'),'.4.0/22')]",
             "vNET_Subnet_LANDINGZONE_NSG": "[concat(parameters('Organization'), '-LandingZone-NSG')]"
           }
         ]

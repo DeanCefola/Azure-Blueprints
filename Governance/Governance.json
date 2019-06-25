@@ -16,39 +16,8 @@
         "metadata": {
           "displayName": "Select 1 Azure Region for Deployment"
         },
-        "defaultValue": "eastus",
-        "allowedValues": [
-          "eastasia",
-          "southeastasia",
-          "centralus",
-          "eastus",
-          "eastus2",
-          "westus",
-          "northcentralus",
-          "southcentralus",
-          "northeurope",
-          "westeurope",
-          "japanwest",
-          "japaneast",
-          "brazilsouth",
-          "australiaeast",
-          "australiasoutheast",
-          "southindia",
-          "centralindia",
-          "westindia",
-          "canadacentral",
-          "canadaeast",
-          "uksouth",
-          "ukwest",
-          "westcentralus",
-          "westus2",
-          "koreacentral",
-          "koreasouth",
-          "francecentral",
-          "francesouth",
-          "australiacentral",
-          "australiacentral2"
-        ]
+        "defaultValue": "East US",
+        "strongType": "location"
       },
       "Policy_Allowed-Locations": {
         "type": "array",
@@ -59,39 +28,7 @@
         "defaultValue": [
           "East US"
         ],
-        "allowedValues": [
-          "East Asia",
-          "Southeast Asia",
-          "Central US",
-          "East US",
-          "East US 2",
-          "West US",
-          "North Central US",
-          "South Centralus",
-          "North Europe",
-          "West Europe",
-          "Japan West",
-          "Japan East",
-          "Brazil South",
-          "Australia East",
-          "Australia Southeast",
-          "South India",
-          "Central India",
-          "West India",
-          "Canada Central",
-          "Canada East",
-          "UK South",
-          "UK West",
-          "West Central US",
-          "West US 2",
-          "Korea Central",
-          "Korea South",
-          "France Central",
-          "France South",
-          "Australia Central",
-          "Australia Central 2"
-        ],
-        "strongType": "location"
+        "strongType":"location"
       },
       "Policy_Allowed-VM-SKUs": {
         "type": "array",
@@ -348,8 +285,10 @@
           "UK South",
           "West Europe",
           "West US 2",
-          "West US"
-        ]
+          "West US",
+          "US Gov Virginia"
+        ],
+        "strongType": "location"
       },
       "HUB-vNET-AddressSpace": {
         "type": "string",
