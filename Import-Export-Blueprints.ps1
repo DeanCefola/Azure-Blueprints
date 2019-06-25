@@ -16,10 +16,11 @@
 ##############################
 #    Get Subscription Info   #
 ##############################
+$MgmtName = '<ENTER MANAGEMENT GROUP NAME>'
 $SubName = '<ENTER SUBSCRIPTION NAME>'
 $SubID = (Get-AzSubscription `
     -SubscriptionName $SubName).id
-$MgmtID = (Get-AzManagementGroup -GroupName AA-Root).id.Split('/')[4]
+$MgmtID = (Get-AzManagementGroup -GroupName $MgmtName).id.Split('/')[4]
 
 
 ##########################################################
