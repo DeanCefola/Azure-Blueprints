@@ -23,16 +23,15 @@
 
 **Export Blueprint from Management Group**
 ============================
-    $BPName = 'Test'
-    $LocalPath = 'C:\temp\Blueprint'
-    $BP = Get-AzBlueprint -ManagementGroupId $MgmtID | Where-Object -Property Name -EQ $BPName
-    $BPVersion = $BP.Versions | select -Last 1
-    Export-AzBlueprintWithArtifact `
-        -Blueprint $BP `
-        -OutputPath $LocalPath `
-        -Version $BPVersion `
-        -Force `
-        -Verbose
+	$LocalPath = 'C:\temp\Blueprint'
+	$BPs = Get-AzBlueprint -ManagementGroupId $MgmtID
+	foreach ($BP in $BPs) {    
+	   Export-AzBlueprintWithArtifact `
+		    -Blueprint $BP `
+		    -OutputPath $LocalPath `
+		    -Force `
+		    -Verbose
+	}
 
 
 **Import Blueprint to Management Group**
@@ -49,28 +48,47 @@
 	
 **Export Blueprint from Subscription**
 ============================
-    $BPName = 'Test'
-    $LocalPath = 'C:\temp\Blueprint'
-    $BP = Get-AzBlueprint -SubscriptionId $SubID | Where-Object -Property Name -EQ $BPName
-    $BPVersion = $BP.Versions | select -Last 1
-    Export-AzBlueprintWithArtifact `
-        -Blueprint $BP `
-        -OutputPath $LocalPath `
-        -Version $BPVersion `
-        -Force `
-        -Verbose
+	$LocalPath = 'C:\temp\Blueprint'
+	$BPs = Get-AzBlueprint -SubscriptionId $SubID
+	foreach ($BP in $BPs) {    
+	   Export-AzBlueprintWithArtifact `
+		    -Blueprint $BP `
+		    -OutputPath $LocalPath `
+		    -Force `
+		    -Verbose
+	}
+
+
+**Import Blueprint to a Management Group**
+============================
+	$LocalPath='C:\temp\Blueprint\'
+	Set-Location $LocalPath
+	$BPFolders = Get-ChildItem $LocalPath
+	foreach($BPFolder in $BPFolders) {
+	    $BPName = $BPFolder.Name
+	    Import-AzBlueprintWithArtifact `
+		-Name $BPName `
+		-InputPath $BPFolder.FullName `
+		-ManagementGroupId $MgmtID `
+		-Force `
+		-Verbose
+	}
 
 
 **Import Blueprint to Subscription**
 ============================
-    $LocalPath='C:\temp\Blueprint\Test'
-    $BPName = $LocalPath.Split('\') | select -Last 1
-    Import-AzBlueprintWithArtifact `
-        -Name $BPName `
-        -InputPath $LocalPath `
-        -SubscriptionId $SubID `
-        -Force `
-        -Verbose
+	$LocalPath='C:\temp\Blueprint\'
+	Set-Location $LocalPath
+	$BPFolders = Get-ChildItem $LocalPath
+	foreach($BPFolder in $BPFolders) {
+	    $BPName = $BPFolder.Name
+	    Import-AzBlueprintWithArtifact `
+		-Name $BPName `
+		-InputPath $BPFolder.FullName `
+		-SubscriptionId $SubID `
+		-Force `
+		-Verbose
+	}
 
 
 **END**
