@@ -59,22 +59,6 @@
 	}
 
 
-**Import Blueprint to a Management Group**
-============================
-	$LocalPath='C:\temp\Blueprint\'
-	Set-Location $LocalPath
-	$BPFolders = Get-ChildItem $LocalPath
-	foreach($BPFolder in $BPFolders) {
-	    $BPName = $BPFolder.Name
-	    Import-AzBlueprintWithArtifact `
-		-Name $BPName `
-		-InputPath $BPFolder.FullName `
-		-ManagementGroupId $MgmtID `
-		-Force `
-		-Verbose
-	}
-
-
 **Import Blueprint to Subscription**
 ============================
 	$LocalPath='C:\temp\Blueprint\'
