@@ -28,30 +28,5 @@
 	"LogAnalytics_Location":       "Region used when establishing the workspace"
 
 
-**How to Manage Azure Blueprints, Import / Export:**
-============================
-Install-Module -Name Az.Blueprint `
-    -Repository PSGallery `
-    -MinimumVersion 0.2.0 `
-    -AllowClobber `
-    -Force `
-    -Verbose
-Import-Module `
-    -Name Az.Blueprint
-
-
-**To IMPORT Blueprints from your subscription do the following:**
-============================
-$LocalPath='C:\temp\Blueprint\AMP'
-$BPName = $LocalPath.Split('\') | select -Last 1
-Import-AzBlueprintWithArtifact `
-    -Name $BPName `
-    -InputPath $LocalPath `
-    -SubscriptionId xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx `
-    -Force `
-    -Verbose
-
-
-
 **END**
 ============================
