@@ -14,7 +14,7 @@
         "DR-Location": {
           "type": "string",
           "metadata": {
-            "displayName": "TEMP - DR Region"
+            "displayName": "Azure DR Region"
           },
           "defaultValue": "westus2",
           "allowedValues": [

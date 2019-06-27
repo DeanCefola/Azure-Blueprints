@@ -12,40 +12,8 @@
         "type": "string",
         "metadata": {
           "displayName": "Select the Azure Region to deploy the AMP Resources"
-        },
-        "defaultValue": "eastus",
-        "allowedValues": [
-          "eastasia",
-          "southeastasia",
-          "centralus",
-          "eastus",
-          "eastus2",
-          "westus",
-          "northcentralus",
-          "southcentralus",
-          "northeurope",
-          "westeurope",
-          "japanwest",
-          "japaneast",
-          "brazilsouth",
-          "australiaeast",
-          "australiasoutheast",
-          "southindia",
-          "centralindia",
-          "westindia",
-          "canadacentral",
-          "canadaeast",
-          "uksouth",
-          "ukwest",
-          "westcentralus",
-          "westus2",
-          "koreacentral",
-          "koreasouth",
-          "francecentral",
-          "francesouth",
-          "australiacentral",
-          "australiacentral2"
-        ]
+        },        
+        "strongType": "location"
       },
       "IPAddress_Space": {
         "type": "string",
@@ -59,39 +27,7 @@
         "metadata": {
           "displayName": "TEMP - DR Region"
         },
-        "defaultValue": "westus2",
-        "allowedValues": [
-          "eastasia",
-          "southeastasia",
-          "centralus",
-          "eastus",
-          "eastus2",
-          "westus",
-          "northcentralus",
-          "southcentralus",
-          "northeurope",
-          "westeurope",
-          "japanwest",
-          "japaneast",
-          "brazilsouth",
-          "australiaeast",
-          "australiasoutheast",
-          "southindia",
-          "centralindia",
-          "westindia",
-          "canadacentral",
-          "canadaeast",
-          "uksouth",
-          "ukwest",
-          "westcentralus",
-          "westus2",
-          "koreacentral",
-          "koreasouth",
-          "francecentral",
-          "francesouth",
-          "australiacentral",
-          "australiacentral2"
-        ]
+        "strongType": "location"
       },
       "KV-AccessPolicy": {
         "type": "string",
@@ -115,8 +51,7 @@
         "metadata": {
           "displayName": "location (Deploy Log Analytics)",
           "description": "Region used when establishing the workspace"
-        },
-        "defaultValue": "East US",
+        },        
         "allowedValues": [
           "Australia Central",
           "Australia East",
@@ -141,7 +76,8 @@
           "West Europe",
           "West US",
           "West US 2"
-        ]
+        ],
+        "strongType": "location"
       }
     },
     "resourceGroups": {
@@ -151,7 +87,9 @@
         "metadata": {
           "displayName": "Resource Group for Shared Services"
         },
-        "dependsOn": []
+        "dependsOn": [
+
+        ]
       },
       "ASR-RG": {
         "name": "[concat(parameters('organization'),'-ASR-rg')]",

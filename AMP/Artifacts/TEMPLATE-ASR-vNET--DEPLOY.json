@@ -25,9 +25,9 @@
             "vNET_Subnet_JUMPBOX_Name": "JumpboxSubnet",
             "vNET_Subnet_JUMPBOX_CIDR": "[concat(parameters('IPAddress_Space'),'.0.128/26')]",
             "vNET_Subnet_JUMPBOX_NSG": "[concat(parameters('Organization'), '-Jumpbox-NSG')]",
-            "vNET_Subnet_LANDINGZONE_Name": "LandingZone",
-            "vNET_Subnet_LANDINGZONE_CIDR": "[concat(parameters('IPAddress_Space'),'.4.0/22')]",
-            "vNET_Subnet_LANDINGZONE_NSG": "[concat(parameters('Organization'), '-LandingZone-NSG')]"
+            "vNET_Subnet_CORE_Name": "Core",
+            "vNET_Subnet_CORE_CIDR": "[concat(parameters('IPAddress_Space'),'.4.0/22')]",
+            "vNET_Subnet_CORE_NSG": "[concat(parameters('Organization'), '-Core-NSG')]"
           }
         ]
       },
@@ -70,12 +70,11 @@
                 }
               },
               {
-                "name": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_LANDINGZONE_Name]",
+                "name": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_CORE_Name]",
                 "properties": {
-                  "addressPrefix": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_LANDINGZONE_CIDR]"
+                  "addressPrefix": "[variables('vNET_Info')[copyIndex()].vNET_Subnet_CORE_CIDR]"
                 }
               }
-
             ]
           },
           "dependsOn": [
@@ -93,7 +92,7 @@
           "dependsOn": [
             "vNET_Copy"
           ],
-          "comments": "Resource lock on Azure LandingZone vNET",
+          "comments": "Resource lock on Azure Core vNET",
           "properties": {
             "level": "CannotDelete"
           }
@@ -112,12 +111,10 @@
           "type": "string",
           "value": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', concat(parameters('Organization'), '-AMP-vNET'), 'JumpboxSubnet')]"
         },
-        "vNETRef_LandingZone": {
+        "vNETRef_Core": {
           "type": "string",
-          "value": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', concat(parameters('Organization'), '-AMP-vNET'), 'LandingZone')]"
+          "value": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', concat(parameters('Organization'), '-AMP-vNET'), 'Core')]"
         }
-
-
       }
     },
     "parameters": {
@@ -133,7 +130,7 @@
     ],
     "resourceGroup": "Network-RG",
     "displayName": "Deploy vNET Landing Zone",
-    "description": "Landing Zone has 4 subnets, Gateway, AzureFirewall, JumpServer, LandingZone for Migrated VMs"
+    "description": "Landing Zone has 4 subnets, Gateway, AzureFirewall, JumpServer, Core for Migrated VMs"
   },
   "kind": "template",
   "type": "Microsoft.Blueprint/blueprints/artifacts"
