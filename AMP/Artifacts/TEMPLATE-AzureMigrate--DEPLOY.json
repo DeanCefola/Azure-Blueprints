@@ -1,5 +1,9 @@
 {
+  "kind": "template",
   "properties": {
+    "displayName": "Deploy Azure Migrate",
+    "description": "Deploy Azure Migrate Project",
+    "dependsOn": [],
     "template": {
       "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
       "contentVersion": "1.0.0.0",
@@ -20,12 +24,8 @@
           "apiVersion": "2018-02-02",
           "name": "[variables('AzureMigrateName')]",
           "location": "westcentralus",
-          "properties": {
-
-          },
-          "dependsOn": [
-
-          ],
+          "properties": {},
+          "dependsOn": [],
           "comments": "Azure Migration project."
         },
         {
@@ -41,22 +41,13 @@
           }
         }
       ],
-      "outputs": {
-
-      }
+      "outputs": {}
     },
+    "resourceGroup": "Migration-RG",
     "parameters": {
       "Organization": {
         "value": "[parameters('Organization')]"
       }
-    },
-    "dependsOn": [
-
-    ],
-    "resourceGroup": "Migration-RG",
-    "displayName": "Deploy Azure Migrate",
-    "description": "Deploy Azure Migrate Project"
-  },
-  "kind":  "template",
-  "type":  "Microsoft.Blueprint/blueprints/artifacts"
+    }
+  }
 }

@@ -1,5 +1,9 @@
 {
+  "kind": "template",
   "properties": {
+    "displayName": "Deploy vNET Landing Zone",
+    "description": "Landing Zone has 4 subnets, Gateway, AzureFirewall, JumpServer, Core for Migrated VMs",
+    "dependsOn": [],
     "template": {
       "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
       "contentVersion": "1.0.0.0",
@@ -77,9 +81,7 @@
               }
             ]
           },
-          "dependsOn": [
-
-          ]
+          "dependsOn": []
         },
         {
           "type": "Microsoft.Network/virtualNetworks/providers/locks",
@@ -117,6 +119,7 @@
         }
       }
     },
+    "resourceGroup": "Network-RG",
     "parameters": {
       "Organization": {
         "value": "[parameters('Organization')]"
@@ -124,14 +127,6 @@
       "IPAddress_Space": {
         "value": "[parameters('IPAddress_Space')]"
       }
-    },
-    "dependsOn": [
-
-    ],
-    "resourceGroup": "Network-RG",
-    "displayName": "Deploy vNET Landing Zone",
-    "description": "Landing Zone has 4 subnets, Gateway, AzureFirewall, JumpServer, Core for Migrated VMs"
-  },
-  "kind": "template",
-  "type": "Microsoft.Blueprint/blueprints/artifacts"
+    }
+  }
 }

@@ -1,5 +1,9 @@
 {
+  "kind": "template",
   "properties": {
+    "displayName": "Deploy Key Vault",
+    "description": "Deploy Key Vault for Secrets, Certs & Keys",
+    "dependsOn": [],
     "template": {
       "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
       "contentVersion": "1.0.0.0",
@@ -19,7 +23,7 @@
       },
       "variables": {
         "deployment-prefix": "[concat(parameters('organization'), '-sharedsvcs')]",
-        "key-vault-name": "[concat(variables('deployment-prefix'), '-kv')]"        
+        "key-vault-name": "[concat(variables('deployment-prefix'), '-kv')]"
       },
       "resources": [
         {
@@ -43,12 +47,8 @@
             "networkAcls": {
               "defaultAction": "Allow",
               "bypass": "AzureServices",
-              "virtualNetworkRules": [
-
-              ],
-              "ipRules": [
-
-              ]
+              "virtualNetworkRules": [],
+              "ipRules": []
             },
             "accessPolicies": [
               {
@@ -107,27 +107,18 @@
           "properties": {
             "level": "CannotDelete"
           }
-        }        
+        }
       ],
-      "outputs": {
-
-      }
+      "outputs": {}
     },
+    "resourceGroup": "HUB-SharedServices-RG",
     "parameters": {
       "organization": {
         "value": "[parameters('Organization')]"
       },
       "KV-AccessPolicy": {
-        "value": "[parameters('KV-AccessPolicy')]"        
+        "value": "[parameters('KV-AccessPolicy')]"
       }
-    },
-    "dependsOn": [
-
-    ],
-    "resourceGroup": "HUB-SharedServices-RG",
-    "displayName": "Deploy Key Vault",
-    "description": "Deploy Key Vault for Secrets, Certs & Keys"
-  },
-  "kind":  "template",
-  "type":  "Microsoft.Blueprint/blueprints/artifacts"
+    }
+  }
 }

@@ -1,5 +1,7 @@
 {
   "properties": {
+    "description": "Azure Migration Project",
+    "targetScope": "subscription",
     "parameters": {
       "Organization": {
         "type": "string",
@@ -12,8 +14,7 @@
         "type": "string",
         "metadata": {
           "displayName": "Select the Azure Region to deploy the AMP Resources"
-        },        
-        "strongType": "location"
+        }
       },
       "IPAddress_Space": {
         "type": "string",
@@ -26,8 +27,7 @@
         "type": "string",
         "metadata": {
           "displayName": "TEMP - DR Region"
-        },
-        "strongType": "location"
+        }
       },
       "KV-AccessPolicy": {
         "type": "string",
@@ -42,16 +42,14 @@
           "description": "Number of days data will be retained for"
         },
         "defaultValue": 365,
-        "allowedValues": [
-
-        ]
+        "allowedValues": []
       },
       "LogAnalytics_Location": {
         "type": "string",
         "metadata": {
           "displayName": "location (Deploy Log Analytics)",
           "description": "Region used when establishing the workspace"
-        },        
+        },
         "allowedValues": [
           "Australia Central",
           "Australia East",
@@ -76,8 +74,7 @@
           "West Europe",
           "West US",
           "West US 2"
-        ],
-        "strongType": "location"
+        ]
       }
     },
     "resourceGroups": {
@@ -87,9 +84,7 @@
         "metadata": {
           "displayName": "Resource Group for Shared Services"
         },
-        "dependsOn": [
-
-        ]
+        "dependsOn": []
       },
       "ASR-RG": {
         "name": "[concat(parameters('organization'),'-ASR-rg')]",
@@ -97,9 +92,7 @@
         "metadata": {
           "displayName": "Resource Group for Azure Site Recovery"
         },
-        "dependsOn": [
-
-        ]
+        "dependsOn": []
       },
       "Network-RG": {
         "name": "[concat(parameters('organization'),'-VNet-rg')]",
@@ -107,9 +100,7 @@
         "metadata": {
           "displayName": "Resource Group for Networks"
         },
-        "dependsOn": [
-
-        ]
+        "dependsOn": []
       },
       "Migration-RG": {
         "name": "[concat(parameters('organization'),'-Migrate-rg')]",
@@ -117,17 +108,8 @@
         "metadata": {
           "displayName": "Resource Group for Azure Migrate"
         },
-        "dependsOn": [
-
-        ]
+        "dependsOn": []
       }
-    },
-    "targetScope": "subscription",
-    "status": {
-      "timeCreated": "2019-05-28T19:31:02+00:00",
-      "lastModified": "2019-05-28T19:31:02+00:00"
-    },
-    "description": "Azure Migration Project"
-  },
-  "type": "Microsoft.Blueprint/blueprints"
+    }
+  }
 }

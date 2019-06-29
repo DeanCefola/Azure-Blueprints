@@ -1,5 +1,9 @@
 {
+  "kind": "template",
   "properties": {
+    "displayName": "Deploy Azure Site Recovery",
+    "description": "Deploy Azure Site Recovery",
+    "dependsOn": [],
     "template": {
       "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
       "contentVersion": "1.0.0.0",
@@ -71,9 +75,7 @@
             "name": "RS0",
             "tier": "Standard"
           },
-          "properties": {
-
-          }
+          "properties": {}
         },
         {
           "type": "Microsoft.RecoveryServices/vaults/providers/locks",
@@ -88,10 +90,9 @@
           }
         }
       ],
-      "outputs": {
-
-      }
+      "outputs": {}
     },
+    "resourceGroup": "ASR-RG",
     "parameters": {
       "organization": {
         "value": "[parameters('Organization')]"
@@ -99,14 +100,6 @@
       "DR-Location": {
         "value": "[parameters('DR-Location')]"
       }
-    },
-    "dependsOn": [
-
-    ],
-    "resourceGroup": "ASR-RG",
-    "displayName": "Deploy Azure Site Recovery",
-    "description": "Deploy Azure Site Recovery"
-  },
-  "kind":  "template",
-  "type":  "Microsoft.Blueprint/blueprints/artifacts"
+    }
+  }
 }
