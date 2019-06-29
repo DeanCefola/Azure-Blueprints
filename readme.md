@@ -9,14 +9,14 @@
 
 **Get PowerShell Script to manage Azure Blueprints**
 ============================
-    Install-Module -Name Az.Blueprint `
-        -Repository PSGallery `
-        -MinimumVersion 0.2.0 `
-        -AllowClobber `
-        -Force `
-        -Verbose
-    Import-Module `
-        -Name Az.Blueprint
+	Install-Module -Name Az.Blueprint `
+	    -Repository PSGallery `
+	    -MinimumVersion 0.2.1 `
+	    -AllowClobber `
+	    -Force `
+	    -Verbose
+	Import-Module `
+	    -Name Az.Blueprint
 
 
 **Export Blueprint from Management Group**
