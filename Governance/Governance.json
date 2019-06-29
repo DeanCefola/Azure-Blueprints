@@ -12,12 +12,18 @@
         "defaultValue": ""
       },
       "HUB-RG-Location": {
+        "type": "array",
+        "metadata": {
+          "displayName": "Select 1 Azure Region for Deployment",
+          "strongType": "location"
+        }        
+      },
+      "Policy_CostCenter_Tag": {
         "type": "string",
         "metadata": {
-          "displayName": "Select 1 Azure Region for Deployment"
+          "displayName": "Append CostCenter TAG & its value from the Resource Group"
         },
-        "defaultValue": "East US",
-        "strongType": "location"
+        "allowedValues": []
       },
       "Policy_Allowed-Locations": {
         "type": "array",
@@ -25,10 +31,7 @@
           "displayName": "Which Azure Regions will you allow resources to be built in?",
           "strongType": "location"
         },
-        "defaultValue": [
-          "East US"
-        ],
-        "strongType":"location"
+        "defaultValue": []
       },
       "Policy_Allowed-VM-SKUs": {
         "type": "array",
@@ -206,7 +209,7 @@
           "Standard_NV12s_v2",
           "Standard_NV24",
           "Standard_NV24s_v2"
-        ]        
+        ]
       },
       "Policy_Allowed-StorageAccount-SKUs": {
         "type": "array",
@@ -226,28 +229,13 @@
           "Standard_ZRS"
         ]
       },
-      "Policy_Allowed-Resource-Types": {
+      "Policy_Resource-Types-DENY": {
         "type": "array",
         "metadata": {
-          "displayName": "Allowed resource types",
-          "description": "The list of resource types that can be deployed.",
+          "displayName": "Denied Resource Types",
+          "description": "The list of resource types that cannot be deployed.",
           "strongType": "resourceTypes"
         }
-      },
-      "Policy_CostCenter_Tag": {
-        "type": "string",
-        "metadata": {
-          "displayName": "Append CostCenter TAG & its value from the Resource Group"
-        },
-        "allowedValues": []
-      },
-      "KeyVault-user-id": {
-        "type": "string",
-        "metadata": {
-          "displayName": "KeyVault-User Access will be granted to an Azure AD Object ID i.e. (abc123de-f456-ghi7-89jk-l0mno123pqr4)",
-          "description": "AAD object ID of the user that requires access to Key Vault."
-        },
-        "allowedValues": []
       },
       "LogAnalytics_DataRetention": {
         "type": "int",
@@ -287,8 +275,15 @@
           "West US 2",
           "West US",
           "US Gov Virginia"
-        ],
-        "strongType": "location"
+        ]
+      },
+      "KeyVault-user-id": {
+        "type": "string",
+        "metadata": {
+          "displayName": "KeyVault-User Access will be granted to an Azure AD Object ID i.e. (abc123de-f456-ghi7-89jk-l0mno123pqr4)",
+          "description": "AAD object ID of the user that requires access to Key Vault."
+        },
+        "allowedValues": []
       },
       "HUB-vNET-AddressSpace": {
         "type": "string",
@@ -331,7 +326,6 @@
         },
         "dependsOn": []
       }
-    },
-    "blueprintName": "Governance"
+    }
   }
 }
