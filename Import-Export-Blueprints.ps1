@@ -29,7 +29,7 @@ $MgmtID = (Get-AzManagementGroup -GroupName $MgmtName).id.Split('/')[4]
 ##########################################################
 Install-Module -Name Az.Blueprint `
     -Repository PSGallery `
-    -MinimumVersion 0.2.0 `
+    -MinimumVersion 0.2.1 `
     -AllowClobber `
     -Force `
     -Verbose
