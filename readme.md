@@ -1,3 +1,9 @@
+
+**Learn more about Blueprints at The Azure Academy**
+============================
+	https://www.youtube.com/AzureAcademy
+	
+	
 **Get Azure  Info**
 ============================
     $MgmtName = '<ENTER MANAGEMENT GROUP NAME>'
