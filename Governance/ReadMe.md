@@ -1,4 +1,10 @@
 
+**Learn more about Blueprints at The Azure Academy**
+============================
+	https://www.youtube.com/AzureAcademy
+	
+	
+
 **Purpose of The Governance Blueprint**
 ============================
 	The Azure Governance Blueprint is a set of controls to help you manage your cloud estate
