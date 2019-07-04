@@ -1,4 +1,9 @@
 
+**Learn more about Blueprints at The Azure Academy**
+============================
+	https://www.youtube.com/AzureAcademy
+	
+	
 **Purpose of the AMP Blueprint**
 ============================
 	Prepare customer subscription for Migration to Azure
