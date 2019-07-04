@@ -1,14 +1,20 @@
 {
-  "kind": "template",
   "properties": {
-    "displayName": "Azure Security Center template",
-    "description": "Set Security Center Standard",
-    "dependsOn": [],
+    "parameters": {
+
+    },
+    "dependsOn": [
+
+    ],
     "template": {
       "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
       "contentVersion": "1.0.0.1",
-      "parameters": {},
-      "variables": {},
+      "parameters": {
+
+      },
+      "variables": {
+
+      },
       "resources": [
         {
           "type": "Microsoft.Security/pricings",
@@ -19,8 +25,13 @@
           }
         }
       ],
-      "outputs": {}
+      "outputs": {
+
+      }
     },
-    "parameters": {}
-  }
+    "displayName": "Azure Security Center template",
+    "description": "Set Security Center Standard"
+  },
+  "kind": "template",
+  "type": "Microsoft.Blueprint/blueprints/artifacts"
 }

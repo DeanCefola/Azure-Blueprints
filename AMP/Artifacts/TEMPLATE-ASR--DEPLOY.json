@@ -1,5 +1,4 @@
 {
-  "kind": "template",
   "properties": {
     "displayName": "Deploy Azure Site Recovery",
     "description": "Deploy Azure Site Recovery",
@@ -8,55 +7,16 @@
       "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
       "contentVersion": "1.0.0.0",
       "parameters": {
-        "organization": {
+        "Organization_Name": {
           "type": "string",
           "metadata": {
-            "description": "Organization name. For example: Contoso"
+            "description": "Organization Name. For example: Contoso"
           },
           "defaultValue": "Contoso"
-        },
-        "DR-Location": {
-          "type": "string",
-          "metadata": {
-            "displayName": "Azure DR Region"
-          },
-          "defaultValue": "westus2",
-          "allowedValues": [
-            "eastasia",
-            "southeastasia",
-            "centralus",
-            "eastus",
-            "eastus2",
-            "westus",
-            "northcentralus",
-            "southcentralus",
-            "northeurope",
-            "westeurope",
-            "japanwest",
-            "japaneast",
-            "brazilsouth",
-            "australiaeast",
-            "australiasoutheast",
-            "southindia",
-            "centralindia",
-            "westindia",
-            "canadacentral",
-            "canadaeast",
-            "uksouth",
-            "ukwest",
-            "westcentralus",
-            "westus2",
-            "koreacentral",
-            "koreasouth",
-            "francecentral",
-            "francesouth",
-            "australiacentral",
-            "australiacentral2"
-          ]
         }
       },
       "variables": {
-        "ASR-VaultName": "[concat(parameters('organization'), '-ASR')]"
+        "ASR-VaultName": "[concat(parameters('Organization_Name'), '-ASR')]"
       },
       "resources": [
         {
@@ -90,16 +50,17 @@
           }
         }
       ],
-      "outputs": {}
+      "outputs": {
+
+      }
     },
     "resourceGroup": "ASR-RG",
     "parameters": {
-      "organization": {
-        "value": "[parameters('Organization')]"
-      },
-      "DR-Location": {
-        "value": "[parameters('DR-Location')]"
+      "Organization_Name": {
+        "value": "[parameters('Organization_Name')]"
       }
     }
-  }
+  },
+  "kind": "template",
+  "type": "Microsoft.Blueprint/blueprints/artifacts"
 }

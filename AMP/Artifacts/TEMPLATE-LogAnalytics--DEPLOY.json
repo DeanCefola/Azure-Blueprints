@@ -1,18 +1,25 @@
 {
-  "kind": "template",
   "properties": {
-    "displayName": "Deploy Log Analytics",
-    "description": "Deploy Log Analytics for Diagnostics",
-    "dependsOn": [],
+    "parameters": {
+      "Organization_Name": {
+        "value": "[parameters('Organization_Name')]"
+      },
+      "data-retention": {
+        "value": "[parameters('LogAnalytics_DataRetention')]"
+      },
+      "location": {
+        "value": "[parameters('LogAnalytics_Location')]"
+      }
+    },
+    "dependsOn": [
+
+    ],
     "template": {
       "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
       "contentVersion": "1.0.0.0",
       "parameters": {
-        "organization": {
-          "type": "string",
-          "metadata": {
-            "description": "Organization name. For example: Contoso"
-          }
+        "Organization_Name": {
+          "type": "string"
         },
         "data-retention": {
           "type": "int",
@@ -26,6 +33,10 @@
         },
         "location": {
           "type": "string",
+          "metadata": {
+            "displayName": "Location",
+            "description": "Region used when establishing the workspace"
+          },
           "allowedValues": [
             "Australia Central",
             "Australia East",
@@ -50,16 +61,11 @@
             "West Europe",
             "West US",
             "West US 2"
-          ],
-          "defaultValue": "East US",
-          "metadata": {
-            "displayName": "Location",
-            "description": "Region used when establishing the workspace"
-          }
+          ]
         }
       },
       "variables": {
-        "deployment-prefix": "[concat(parameters('Organization'), '-sharedsvcs')]",
+        "deployment-prefix": "[concat(parameters('Organization_Name'), '-sharedsvcs')]",
         "uniqueString": "[uniqueString(subscription().id, concat(variables('deployment-prefix'), '-log'))]",
         "diagnostic-storageAccount-prefix": "[concat(replace(variables('deployment-prefix'), '-', ''), 'diag')]",
         "diagnostic-storageAccount-name": "[toLower(substring(replace(concat(variables('diagnostic-storageAccount-prefix'), variables('uniqueString'), variables('uniqueString')), '-', ''), 0, 23) )]",
@@ -134,19 +140,14 @@
           }
         }
       ],
-      "outputs": {}
+      "outputs": {
+
+      }
     },
     "resourceGroup": "HUB-SharedServices-RG",
-    "parameters": {
-      "organization": {
-        "value": "[parameters('Organization')]"
-      },
-      "data-retention": {
-        "value": "[parameters('LogAnalytics_DataRetention')]"
-      },
-      "location": {
-        "value": "[parameters('LogAnalytics_Location')]"
-      }
-    }
-  }
+    "displayName": "Deploy Log Analytics",
+    "description": "Deploy Log Analytics for Diagnostics"
+  },
+  "kind": "template",
+  "type": "Microsoft.Blueprint/blueprints/artifacts"
 }

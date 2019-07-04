@@ -1,43 +1,49 @@
 {
   "properties": {
-    "displayName": "Deploy Governance Foundation for Azure",
-    "description": "Governance ",
-    "targetScope": "subscription",
     "parameters": {
-      "Organization": {
+      "Organization_Name": {
         "type": "string",
         "metadata": {
-          "displayName": "Enter your organization name (e.g. Contoso), must be unique"
+          "displayName": "Enter your organization name (e.g. Contoso), must be unique",
+          "description": "Organization_Name"
         },
         "defaultValue": ""
       },
-      "HUB-RG-Location": {
-        "type": "array",
-        "metadata": {
-          "displayName": "Select 1 Azure Region for Deployment",
-          "strongType": "location"
-        }        
-      },
-      "Policy_CostCenter_Tag": {
+      "AzureRegion": {
         "type": "string",
         "metadata": {
-          "displayName": "Append CostCenter TAG & its value from the Resource Group"
+          "displayName": "Select the Azure Region to deploy the Resources",
+          "description": "AzureRegion",
+          "strongType": "location"
         },
-        "allowedValues": []
+        "defaultValue": "eastus"
       },
       "Policy_Allowed-Locations": {
         "type": "array",
         "metadata": {
           "displayName": "Which Azure Regions will you allow resources to be built in?",
+          "description": "Policy_Allowed-Locations",
           "strongType": "location"
         },
-        "defaultValue": []
+        "defaultValue": [
+
+        ]
+      },
+      "Policy_CostCenter_Tag": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Append CostCenter TAG & its value from the Resource Group",
+          "description": "AzureRegion"
+        },
+        "allowedValues": [
+
+        ]
       },
       "Policy_Allowed-VM-SKUs": {
         "type": "array",
         "metadata": {
-          "displayName": "Allowed virtual machine SKUs",
-          "strongType": "vmSKUs"
+          "displayName": "Virtual Machine SKUs you want to ALLOW",
+          "description": "Policy_Allowed-VM-SKUs"
         },
         "defaultValue": [
           "Standard_B2ms",
@@ -214,8 +220,8 @@
       "Policy_Allowed-StorageAccount-SKUs": {
         "type": "array",
         "metadata": {
-          "displayName": "Allowed storage SKUs",
-          "description": "SKU used in Diagnostic Log storage accounts",
+          "displayName": "Storage Account SKUs you want to ALLOW",
+          "description": "Policy_Allowed-StorageAccount-SKUs",
           "strongType": "storageSKUs"
         },
         "defaultValue": [
@@ -232,100 +238,119 @@
       "Policy_Resource-Types-DENY": {
         "type": "array",
         "metadata": {
-          "displayName": "Denied Resource Types",
-          "description": "The list of resource types that cannot be deployed.",
+          "displayName": "Select the Azure Resource Types that you will DENY",
+          "description": "Policy_Resource-Types-DENY",
           "strongType": "resourceTypes"
         }
       },
       "LogAnalytics_DataRetention": {
         "type": "int",
         "metadata": {
-          "displayName": "data-retention (Deploy Log Analytics)",
-          "description": "Number of days data will be retained for"
+          "displayName": "Number of days data will be retained in Log Analytics",
+          "description": "LogAnalytics_DataRetention"
         },
         "defaultValue": 365,
-        "allowedValues": []
+        "allowedValues": [
+          30,
+          60,
+          90,
+          120,
+          180,
+          365
+        ]
       },
       "LogAnalytics_Location": {
         "type": "string",
         "metadata": {
-          "displayName": "location (Deploy Log Analytics)",
-          "description": "Region used when establishing the workspace"
+          "displayName": "Azure Region used when establishing the Log Analytics workspace",
+          "description": "LogAnalytics_Location"
         },
-        "defaultValue": "East US",
         "allowedValues": [
           "Australia Central",
           "Australia East",
           "Australia Southeast",
+          "Brazil South",
           "Canada Central",
           "Central India",
           "Central US",
           "East Asia",
-          "East US 2",
           "East US",
+          "East US 2",
           "France Central",
           "Japan East",
           "Korea Central",
           "North Central US",
           "North Europe",
+          "South Africa North",
           "South Central US",
           "Southeast Asia",
           "UK South",
+          "UK West",
           "West Europe",
-          "West US 2",
           "West US",
-          "US Gov Virginia"
+          "West US 2"
         ]
       },
-      "KeyVault-user-id": {
+      "KV-AccessPolicy": {
         "type": "string",
         "metadata": {
-          "displayName": "KeyVault-User Access will be granted to an Azure AD Object ID i.e. (abc123de-f456-ghi7-89jk-l0mno123pqr4)",
-          "description": "AAD object ID of the user that requires access to Key Vault."
-        },
-        "allowedValues": []
+          "displayName": "Azure AD Group or User 'ObjectID' to grant permissions in Key Vault.(abc123de-f456-ghi7-89jk-l0mno123pqr4)",
+          "description": "KV-AccessPolicy"
+        }
       },
-      "HUB-vNET-AddressSpace": {
+      "IPAddress_Space": {
         "type": "string",
         "metadata": {
-          "displayName": "HUB Vitual Network IP Address Space"
+          "displayName": "Virtual Network IP Addressspace - Provide first 2 octets i.e. 10.0",
+          "description": "IPAddress_Space"
         },
         "defaultValue": "10.0"
       }
     },
     "resourceGroups": {
       "HUB-SharedServices-RG": {
-        "name": "[concat(parameters('organization'),'-sharedsvcs-rg')]",
-        "location": "[parameters('HUB-RG-Location')]",
+        "name": "[concat(parameters('Organization_Name'),'-sharedsvcs-rg')]",
+        "location": "[parameters('AzureRegion')]",
         "metadata": {
           "displayName": "Resource Group for Shared Services"
         },
-        "dependsOn": []
-      },
-      "HUB-Identity-RG": {
-        "name": "[concat(parameters('organization'),'-HUB-Identity-rg')]",
-        "location": "[parameters('HUB-RG-Location')]",
-        "metadata": {
-          "displayName": "Resource Group for Identity Services"
-        },
-        "dependsOn": []
+        "dependsOn": [
+
+        ]
       },
       "Network-RG": {
-        "name": "[concat(parameters('organization'),'-VNet-rg')]",
-        "location": "[parameters('HUB-RG-Location')]",
+        "name": "[concat(parameters('Organization_Name'),'-VNet-rg')]",
+        "location": "[parameters('AzureRegion')]",
         "metadata": {
           "displayName": "Resource Group for Networks"
         },
-        "dependsOn": []
+        "dependsOn": [
+
+        ]
+      },
+      "HUB-Identity-RG": {
+        "name": "[concat(parameters('Organization_Name'),'-HUB-Identity-rg')]",
+        "location": "[parameters('AzureRegion')]",
+        "metadata": {
+          "displayName": "Resource Group for Identity Services"
+        },
+        "dependsOn": [
+
+        ]
       },
       "Application-RG": {
-        "name": "[concat(parameters('organization'),'-Application-rg')]",
-        "location": "[parameters('HUB-RG-Location')]",
+        "name": "[concat(parameters('Organization_Name'),'-Application-rg')]",
+        "location": "[parameters('AzureRegion')]",
         "metadata": {
           "displayName": "Resource Group for First Application"
         },
-        "dependsOn": []
+        "dependsOn": [
+
+        ]
       }
-    }
+    },
+    "displayName": "Deploy Cloud Adoption Framework - Azure Governance Foundation",
+    "description": "Azure Governance",
+    "targetScope": "subscription"
   }
 }

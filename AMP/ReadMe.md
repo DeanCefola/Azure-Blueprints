@@ -18,12 +18,16 @@
 			Azure Migrate Project
 			
 
-**Input Parameters:**
+**Blueprint Parameters:**
 ============================
 	"Organization":                "Enter your organization name (e.g. Contoso), must be unique"
-	"AzureRegion":                 "Select one Azure Region for Deployment"
-	"IPAddress_Space":             "Provide first 2 octets i.e. 10.0"	
-	"KV-AccessPolicy":             "User ID to grant permissions to in Key Vault"
+	"AzureRegion":                 "Select the Azure Region to deploy the Resources"
+
+
+**Artifact Parameters:**
+============================
+	"IPAddress_Space":             "Virtual Network IP Addressspace - Provide first 2 octets i.e. 10.0"	
+	"KV-AccessPolicy":             "Azure AD Group or User <Object ID> to grant permissions to in Key Vault"
 	"LogAnalytics_DataRetention":  "Number of days data will be retained in in Log Analytics"
 	"LogAnalytics_Location":       "Region used when establishing the workspace"
 

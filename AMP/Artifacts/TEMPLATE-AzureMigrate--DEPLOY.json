@@ -1,5 +1,4 @@
 {
-  "kind": "template",
   "properties": {
     "displayName": "Deploy Azure Migrate",
     "description": "Deploy Azure Migrate Project",
@@ -8,15 +7,12 @@
       "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
       "contentVersion": "1.0.0.0",
       "parameters": {
-        "Organization": {
-          "type": "string",
-          "metadata": {
-            "description": "Organization name. For example: Contoso"
-          }
+        "Organization_Name": {
+          "type": "string"
         }
       },
       "variables": {
-        "AzureMigrateName": "[concat(parameters('Organization'),'-Migrate')]"
+        "AzureMigrateName": "[concat(parameters('Organization_Name'),'-Migrate')]"
       },
       "resources": [
         {
@@ -41,13 +37,17 @@
           }
         }
       ],
-      "outputs": {}
+      "outputs": {
+
+      }
     },
     "resourceGroup": "Migration-RG",
     "parameters": {
-      "Organization": {
-        "value": "[parameters('Organization')]"
+      "Organization_Name": {
+        "value": "[parameters('Organization_Name')]"
       }
     }
-  }
+  },
+  "kind": "template",
+  "type": "Microsoft.Blueprint/blueprints/artifacts"
 }

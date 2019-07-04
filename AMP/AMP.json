@@ -1,54 +1,59 @@
 {
   "properties": {
-    "description": "Azure Migration Project",
-    "targetScope": "subscription",
     "parameters": {
-      "Organization": {
+      "Organization_Name": {
         "type": "string",
         "metadata": {
-          "displayName": "Enter your organization name (e.g. Contoso), must be unique"
+          "displayName": "Enter your organization name (e.g. Contoso), must be unique",
+          "description": "Organization_Name"
         },
-        "defaultValue": "contoso"
+        "defaultValue": ""
       },
       "AzureRegion": {
         "type": "string",
         "metadata": {
-          "displayName": "Select the Azure Region to deploy the AMP Resources"
-        }
-      },
+          "displayName": "Select the Azure Region to deploy the Resources",
+          "description": "AzureRegion",
+          "strongType": "location"
+        },
+        "defaultValue": "eastus"
+      },      
       "IPAddress_Space": {
         "type": "string",
         "metadata": {
-          "displayName": "Provide first 2 octets i.e. 10.0"
+          "displayName": "Virtual Network IP Addressspace - Provide first 2 octets i.e. 10.0",
+          "description": "IPAddress_Space"
         },
         "defaultValue": "10.0"
-      },
-      "DR-Location": {
-        "type": "string",
-        "metadata": {
-          "displayName": "TEMP - DR Region"
-        }
       },
       "KV-AccessPolicy": {
         "type": "string",
         "metadata": {
-          "description": "User ID to grant permissions to in Key Vault"
+          "displayName": "Azure AD Group or User 'ObjectID' to grant permissions in Key Vault.(abc123de-f456-ghi7-89jk-l0mno123pqr4)",
+          "description": "KV-AccessPolicy"
         }
       },
       "LogAnalytics_DataRetention": {
         "type": "int",
         "metadata": {
-          "displayName": "data-retention (Deploy Log Analytics)",
-          "description": "Number of days data will be retained for"
+          "displayName": "Number of days data will be retained in Log Analytics",
+          "description": "LogAnalytics_DataRetention"
         },
         "defaultValue": 365,
-        "allowedValues": []
+        "allowedValues": [
+          30,
+          60,
+          90,
+          120,
+          180,
+          365
+        ]
       },
       "LogAnalytics_Location": {
         "type": "string",
         "metadata": {
-          "displayName": "location (Deploy Log Analytics)",
-          "description": "Region used when establishing the workspace"
+          "displayName": "Azure Region used when establishing the Log Analytics workspace",
+          "description": "LogAnalytics_Location"
         },
         "allowedValues": [
           "Australia Central",
@@ -79,37 +84,48 @@
     },
     "resourceGroups": {
       "HUB-SharedServices-RG": {
-        "name": "[concat(parameters('organization'),'-sharedsvcs-rg')]",
+        "name": "[concat(parameters('Organization_Name'),'-sharedsvcs-rg')]",
         "location": "[parameters('AzureRegion')]",
         "metadata": {
           "displayName": "Resource Group for Shared Services"
         },
-        "dependsOn": []
-      },
-      "ASR-RG": {
-        "name": "[concat(parameters('organization'),'-ASR-rg')]",
-        "location": "[parameters('AzureRegion')]",
-        "metadata": {
-          "displayName": "Resource Group for Azure Site Recovery"
-        },
-        "dependsOn": []
+        "dependsOn": [
+
+        ]
       },
       "Network-RG": {
-        "name": "[concat(parameters('organization'),'-VNet-rg')]",
+        "name": "[concat(parameters('Organization_Name'),'-VNet-rg')]",
         "location": "[parameters('AzureRegion')]",
         "metadata": {
           "displayName": "Resource Group for Networks"
         },
-        "dependsOn": []
+        "dependsOn": [
+
+        ]
+      },
+      "ASR-RG": {
+        "name": "[concat(parameters('Organization_Name'),'-ASR-rg')]",
+        "location": "[parameters('AzureRegion')]",
+        "metadata": {
+          "displayName": "Resource Group for Azure Site Recovery"
+        },
+        "dependsOn": [
+
+        ]
       },
       "Migration-RG": {
-        "name": "[concat(parameters('organization'),'-Migrate-rg')]",
+        "name": "[concat(parameters('Organization_Name'),'-Migrate-rg')]",
         "location": "westcentralus",
         "metadata": {
           "displayName": "Resource Group for Azure Migrate"
         },
-        "dependsOn": []
+        "dependsOn": [
+
+        ]
       }
-    }
+    },
+    "displayName": "Deploy Cloud Adoption Framework - Azure Migrate landing zone",
+    "description": "Azure Migrate landing zone",
+    "targetScope": "subscription"
   }
 }

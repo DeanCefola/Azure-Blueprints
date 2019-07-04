@@ -1,5 +1,4 @@
 {
-  "kind": "template",
   "properties": {
     "displayName": "Deploy Key Vault",
     "description": "Deploy Key Vault for Secrets, Certs & Keys",
@@ -8,21 +7,15 @@
       "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
       "contentVersion": "1.0.0.0",
       "parameters": {
-        "organization": {
-          "type": "string",
-          "metadata": {
-            "description": "Organization name. For example: Contoso"
-          }
+        "Organization_Name": {
+          "type": "string"
         },
         "KV-AccessPolicy": {
-          "type": "string",
-          "metadata": {
-            "description": "User ID to grant permissions to in Key Vault"
-          }
+          "type": "string"
         }
       },
       "variables": {
-        "deployment-prefix": "[concat(parameters('organization'), '-sharedsvcs')]",
+        "deployment-prefix": "[concat(parameters('Organization_Name'), '-sharedsvcs')]",
         "key-vault-name": "[concat(variables('deployment-prefix'), '-kv')]"
       },
       "resources": [
@@ -109,16 +102,20 @@
           }
         }
       ],
-      "outputs": {}
+      "outputs": {
+
+      }
     },
     "resourceGroup": "HUB-SharedServices-RG",
     "parameters": {
-      "organization": {
-        "value": "[parameters('Organization')]"
+      "Organization_Name": {
+        "value": "[parameters('Organization_Name')]"
       },
       "KV-AccessPolicy": {
         "value": "[parameters('KV-AccessPolicy')]"
       }
     }
-  }
+  },
+  "kind": "template",
+  "type": "Microsoft.Blueprint/blueprints/artifacts"
 }
