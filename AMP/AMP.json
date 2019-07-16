@@ -17,7 +17,25 @@
           "strongType": "location"
         },
         "defaultValue": "eastus"
-      },      
+      },
+      "Azure_Migrate_Location": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Select the Region to deploy Azure Migrate",
+          "description": "Azure Migrate Location"
+        },
+        "defaultValue": "West US 2",
+        "allowedValues": [          
+          "Central US",
+          "East Asia",
+          "North Europe",
+          "Southeast Asia",
+          "UK South",
+          "UK West",
+          "West Europe",
+          "West US 2"
+        ]
+      },
       "IPAddress_Space": {
         "type": "string",
         "metadata": {
@@ -83,14 +101,14 @@
       }
     },
     "resourceGroups": {
-      "HUB-SharedServices-RG": {
+      "SharedServices-RG": {
         "name": "[concat(parameters('Organization_Name'),'-sharedsvcs-rg')]",
         "location": "[parameters('AzureRegion')]",
         "metadata": {
           "displayName": "Resource Group for Shared Services"
         },
         "dependsOn": [
-
+          
         ]
       },
       "Network-RG": {
@@ -102,30 +120,10 @@
         "dependsOn": [
 
         ]
-      },
-      "ASR-RG": {
-        "name": "[concat(parameters('Organization_Name'),'-ASR-rg')]",
-        "location": "[parameters('AzureRegion')]",
-        "metadata": {
-          "displayName": "Resource Group for Azure Site Recovery"
-        },
-        "dependsOn": [
-
-        ]
-      },
-      "Migration-RG": {
-        "name": "[concat(parameters('Organization_Name'),'-Migrate-rg')]",
-        "location": "westcentralus",
-        "metadata": {
-          "displayName": "Resource Group for Azure Migrate"
-        },
-        "dependsOn": [
-
-        ]
-      }
+      }      
     },
     "displayName": "Deploy Cloud Adoption Framework - Azure Migrate landing zone",
     "description": "Azure Migrate landing zone",
     "targetScope": "subscription"
-  }
+  }  
 }

@@ -22,8 +22,7 @@
           "type": "string"
         }
       },
-      "variables": {
-        "Convert_IP_Object": "[string(parameters('IPAddress_Space'))]",
+      "variables": {        
         "vNET_Info": [
           {
             "vNET_Name": "[concat(parameters('Organization_Name'), '-AMP-vNET')]",

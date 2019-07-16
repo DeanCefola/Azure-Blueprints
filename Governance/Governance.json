@@ -308,7 +308,7 @@
       }
     },
     "resourceGroups": {
-      "HUB-SharedServices-RG": {
+      "SharedServices-RG": {
         "name": "[concat(parameters('Organization_Name'),'-sharedsvcs-rg')]",
         "location": "[parameters('AzureRegion')]",
         "metadata": {
@@ -328,8 +328,8 @@
 
         ]
       },
-      "HUB-Identity-RG": {
-        "name": "[concat(parameters('Organization_Name'),'-HUB-Identity-rg')]",
+      "Identity-RG": {
+        "name": "[concat(parameters('Organization_Name'),'-Identity-rg')]",
         "location": "[parameters('AzureRegion')]",
         "metadata": {
           "displayName": "Resource Group for Identity Services"

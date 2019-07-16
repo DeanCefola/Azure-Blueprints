@@ -144,7 +144,7 @@
 
       }
     },
-    "resourceGroup": "HUB-SharedServices-RG",
+    "resourceGroup": "SharedServices-RG",
     "displayName": "Deploy Log Analytics",
     "description": "Deploy Log Analytics for Diagnostics"
   },

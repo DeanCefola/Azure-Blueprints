@@ -1,8 +1,16 @@
 {
   "properties": {
-    "displayName": "Deploy Key Vault",
-    "description": "Deploy Key Vault for Secrets, Certs & Keys",
-    "dependsOn": [],
+    "parameters": {
+      "Organization_Name": {
+        "value": "[parameters('Organization_Name')]"
+      },
+      "KV-AccessPolicy": {
+        "value": "[parameters('KV-AccessPolicy')]"
+      }
+    },
+    "dependsOn": [
+
+    ],
     "template": {
       "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
       "contentVersion": "1.0.0.0",
@@ -106,15 +114,9 @@
 
       }
     },
-    "resourceGroup": "HUB-SharedServices-RG",
-    "parameters": {
-      "Organization_Name": {
-        "value": "[parameters('Organization_Name')]"
-      },
-      "KV-AccessPolicy": {
-        "value": "[parameters('KV-AccessPolicy')]"
-      }
-    }
+    "resourceGroup": "SharedServices-RG",
+    "displayName": "Deploy Key Vault",
+    "description": "Deploy Key Vault for Secrets, Certs & Keys"
   },
   "kind": "template",
   "type": "Microsoft.Blueprint/blueprints/artifacts"

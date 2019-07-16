@@ -1,7 +1,7 @@
 
 **Learn more about Blueprints at The Azure Academy**
 ============================
-	https://www.youtube.com/AzureAcademy
+	https://www.youtube.com/AzureAcademy/playlists
 	
 	
 **Purpose of the AMP Blueprint**
@@ -12,15 +12,17 @@
 **What is the AMP Blueprint create for you:**
 ============================
 	Resource Groups
-		"HUB-SharedServices-RG":
+		"SharedServices-RG":
 			Azure KeyVault 
 			Azure Log Analytics Workspace
-		"ASR-RG": 
-			Azure Site Recovery
-		"Network-RG": 
-			Virtual Network 
-		"Migration-RG": 
+			Azure Storage Account
 			Azure Migrate Project
+				Azure Migrate: Server   Assessment
+				Azure Migrate: Server   Migration
+				Azure Migrate: Database Assessment
+				Azure Migrate: Database Migration
+		"Network-RG": 
+			Virtual Network
 			
 
 **Blueprint Parameters:**
@@ -35,6 +37,7 @@
 	"KV-AccessPolicy":             "Azure AD Group or User <Object ID> to grant permissions to in Key Vault"
 	"LogAnalytics_DataRetention":  "Number of days data will be retained in in Log Analytics"
 	"LogAnalytics_Location":       "Region used when establishing the workspace"
+	"Azure_Migrate_Location":	   "Select the Region to deploy Azure Migrate"
 
 
 **END**

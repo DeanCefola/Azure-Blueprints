@@ -1,7 +1,7 @@
 
 **Learn more about Blueprints at The Azure Academy**
 ============================
-	https://www.youtube.com/AzureAcademy
+	https://www.youtube.com/AzureAcademy/playlists
 	
 	
 
