@@ -1,0 +1,210 @@
+{
+    "properties": {
+        "template": {
+            "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+            "contentVersion": "1.0.0.0",
+            "parameters": {
+                "environmentKey": {
+                    "type": "string",
+                    "metadata": {
+                        "displayName": "Environment Key",
+                        "description": "Display tag for the environment being provisioned - Dev, Test, LoadTest, UAT, Prod etc.",
+                        "strongType": "environmentKey"
+                    },
+                    "defaultValue": ""
+                },
+                "organization": {
+                    "type": "string",
+                    "metadata": {
+                        "description": "Organization name, i.e. jhp"
+                    }
+                },
+                "location": {
+                    "type": "string",
+                    "allowedValues": [
+                        "UK South"
+                    ],
+                    "defaultValue": "UK South",
+                    "metadata": {
+                        "displayName": "Location",
+                        "description": "Region used when establishing the workspace"
+                    }
+                },
+                "web-dnsName": {
+                    "type": "string",
+                    "defaultValue": "dev.jameshay.co.uk",
+                    "metadata": {
+                        "displayName": "DNS Name to use for web",
+                        "description": "The DNS Name to use for all web behaviours"
+                    }
+                },
+                "defaultVmSkuToUse": {
+                    "type": "string",
+                    "metadata": {
+                        "displayName": "VM SKU to use by default - needs to be in the allowed list",
+                        "description": "SKU used for provisioning all/any VMs by default",
+                        "strongType": "defaultStorageSku"
+                    },
+                    "defaultValue": "Standard_DS2_v2"
+                },
+                "web-CertificateKeyVault": {
+                    "type": "string",
+                    "metadata": {
+                        "displayName": "KeyVault ID containing the web certificate",
+                        "description": "The Key Vault containing the Base64 encoded PFX for the web"
+                    }
+                },
+                "web-CertificateKeyVaultKey": {
+                    "type": "string",
+                    "metadata": {
+                        "displayName": "KeyVault web certificate key",
+                        "description": "The key to use in order to access the SSL Certificate"
+                    }
+                }
+            },
+            "variables": {
+                "deployment-prefix": "[concat(parameters('organization'), '-sharedsvcs')]",
+                "uniqueString": "[uniqueString(subscription().id, concat(variables('deployment-prefix'), '-log'))]",
+                "diagnostic-storageAccount-prefix": "[concat(replace(variables('deployment-prefix'), '-', ''), 'diag')]",
+                "diagnostic-storageAccount-name": "[toLower(substring(replace(concat(variables('diagnostic-storageAccount-prefix'), variables('uniqueString'), variables('uniqueString')), '-', ''), 0, 23) )]",
+                "oms-workspace-name": "[concat(variables('deployment-prefix'), '-log')]",
+                "vnet-resourceGroup": "[concat(variables('deployment-prefix'), '-net-rg')]",
+                "vnet-name": "[concat(variables('deployment-prefix'), '-vnet')]",
+                "app-service-environment-name": "[concat(variables('deployment-prefix'), '-ase')]",
+                "app-service-environment-certificate-name": "[concat(variables('app-service-environment-name'), '-cert')]"
+            },
+            "resources": [
+                {
+                    "type": "Microsoft.Web/certificates",
+                    "name": "[variables('app-service-environment-certificate-name')]",
+                    "apiVersion": "2016-03-01",
+                    "location": "[resourceGroup().location]",
+                    "tags": {
+                        "Environment": "[parameters('environmentKey')]",
+                        "DeptName": "Information Technology",
+                        "PlatformTeam": "Ops",
+                        "ServiceType": "Certificate",
+                        "Purpose": "Foundation Infrastructure"
+                    },
+                    "scale": null,
+                    "properties": {
+                        "keyVaultId": "[parameters('web-CertificateKeyVault')]",
+                        "keyVaultSecretName": "[parameters('web-CertificateKeyVaultKey')]",
+                        "hostNames": [
+                            "[parameters('web-dnsName')]",
+                            "[concat('*.', parameters('web-dnsName'))]"
+                        ],
+                        "pfxBlob": null,
+                        "password": null,
+                        "cerBlob": null,
+                        "serverFarmId": null
+                    },
+                    "dependsOn": []
+                },
+                {
+                    "type": "Microsoft.Web/hostingEnvironments",
+                    "kind": "ASEV2",
+                    "name": "[variables('app-service-environment-name')]",
+                    "apiVersion": "2016-09-01",
+                    "location": "[resourceGroup().location]",
+                    "tags": {
+                        "Environment": "[parameters('environmentKey')]",
+                        "DeptName": "Information Technology",
+                        "PlatformTeam": "Ops",
+                        "ServiceType": "Hosting Environment",
+                        "Purpose": "Foundation Infrastructure"
+                    },
+                    "properties": {
+                        "name": "[variables('app-service-environment-name')]",
+                        "location": "[resourceGroup().location]",
+                        "vnetName": "[variables('vnet-name')]",
+                        "vnetResourceGroupName": "[variables('vnet-resourceGroup')]",
+                        "vnetSubnetName": "ase",
+                        "virtualNetwork": {
+                            "id": "[resourceId(variables('vnet-resourceGroup'), 'Microsoft.Network/virtualNetworks', variables('vnet-name'))]",
+                            "subnet": "ase"
+                        },
+                        "internalLoadBalancingMode": "Web",
+                        "multiSize": "[parameters('defaultVmSkuToUse')]",
+                        "multiRoleCount": 2,
+                        "workerPools": null,
+                        "ipsslAddressCount": 0,
+                        "dnsSuffix": "[parameters('web-dnsName')]",
+                        "networkAccessControlList": [],
+                        "frontEndScaleFactor": 15,
+                        "apiManagementAccountId": null,
+                        "suspended": false,
+                        "dynamicCacheEnabled": null,
+                        "clusterSettings": [
+                            {
+                                "name": "DefaultSslCertificateThumbprint",
+                                "value": "[reference(resourceId('Microsoft.Web/certificates', variables('app-service-environment-certificate-name'))).Thumbprint]"
+                            }
+                        ]
+                    },
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Web/certificates', variables('app-service-environment-certificate-name'))]"
+                    ]
+                },
+                {
+                    "type": "Microsoft.Web/hostingEnvironments/multiRolePools",
+                    "sku": {
+                        "name": "Q1",
+                        "tier": "Quantum",
+                        "size": "Q1",
+                        "family": "Q",
+                        "capacity": 2
+                    },
+                    "name": "[concat(variables('app-service-environment-name'), '/', 'default')]",
+                    "apiVersion": "2016-09-01",
+                    "location": "[resourceGroup().location]",
+                    "scale": null,
+                    "properties": {
+                        "workerSize": "[parameters('defaultVmSkuToUse')]",
+                        "workerCount": 2,
+                        "instanceNames": [
+                            "10.0.7.1",
+                            "10.0.7.2"
+                        ],
+                        "mdmId": "waws-prod-ln1-7b33868d_MultiRole"
+                    },
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Web/hostingEnvironments', variables('app-service-environment-name'))]"
+                    ]
+                }
+            ],
+            "outputs": {}
+        },
+        "parameters": {
+            "environmentKey": {
+                "value": "[parameters('environmentKey')]"
+            },
+            "organization": {
+                "value": "[parameters('organization')]"
+            },
+            "location": {
+                "value": "[parameters('log-analytics_location')]"
+            },
+            "web-dnsName": {
+                "value": "[parameters('web-dnsName')]"
+            },
+            "defaultVmSkuToUse": {
+                "value": "[parameters('defaultVmSkuToUse')]"
+            },
+            "web-CertificateKeyVault": {
+                "value": "[parameters('web-CertificateKeyVault')]"
+            },
+            "web-CertificateKeyVaultKey": {
+                "value": "[parameters('web-CertificateKeyVaultKey')]"
+            }
+        },
+        "dependsOn": [
+            "net"
+        ],
+        "resourceGroup": "SharedWebResourceGroup",
+        "displayName": "Shared Web template",
+        "description": ""
+    },
+    "kind": "template",
+    "type": "Microsoft.Blueprint/blueprints/artifacts"
+}

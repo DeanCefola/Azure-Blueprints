@@ -1,22 +1,13 @@
 {
   "properties": {
     "parameters": {
-      "Organization_Name": {
+      "Policy_CostCenter_Tag": {
         "type": "string",
         "metadata": {
-          "displayName": "Enter your organization name (e.g. Contoso), must be unique",
-          "description": "Organization_Name"
+          "displayName": "Append CostCenter TAG & its value from the Resource Group",
+          "description": "AzureRegion"
         },
-        "defaultValue": ""
-      },
-      "AzureRegion": {
-        "type": "string",
-        "metadata": {
-          "displayName": "Select the Azure Region to deploy the Resources",
-          "description": "AzureRegion",
-          "strongType": "location"
-        },
-        "defaultValue": "eastus"
+        "allowedValues": []
       },
       "Policy_Allowed-Locations": {
         "type": "array",
@@ -25,18 +16,32 @@
           "description": "Policy_Allowed-Locations",
           "strongType": "location"
         },
-        "defaultValue": [
-
-        ]
+        "defaultValue": []
       },
-      "Policy_CostCenter_Tag": {
-        "type": "string",
+      "Policy_Resource-Types-DENY": {
+        "type": "array",
         "metadata": {
-          "displayName": "Append CostCenter TAG & its value from the Resource Group",
-          "description": "AzureRegion"
+          "displayName": "Select the Azure Resource Types that you will DENY",
+          "description": "Policy_Resource-Types-DENY",
+          "strongType": "resourceTypes"
+        }
+      },
+      "Policy_Allowed-StorageAccount-SKUs": {
+        "type": "array",
+        "metadata": {
+          "displayName": "Storage Account SKUs you want to ALLOW",
+          "description": "Policy_Allowed-StorageAccount-SKUs",
+          "strongType": "storageSKUs"
         },
+        "defaultValue": [
+          "Standard_LRS"
+        ],
         "allowedValues": [
-
+          "Premium_LRS",
+          "Standard_GRS",
+          "Standard_LRS",
+          "Standard_RAGRS",
+          "Standard_ZRS"
         ]
       },
       "Policy_Allowed-VM-SKUs": {
@@ -217,31 +222,13 @@
           "Standard_NV24s_v2"
         ]
       },
-      "Policy_Allowed-StorageAccount-SKUs": {
-        "type": "array",
+      "Organization_Name": {
+        "type": "string",
         "metadata": {
-          "displayName": "Storage Account SKUs you want to ALLOW",
-          "description": "Policy_Allowed-StorageAccount-SKUs",
-          "strongType": "storageSKUs"
+          "displayName": "Enter your organization name (e.g. Contoso), must be unique",
+          "description": "Organization_Name"
         },
-        "defaultValue": [
-          "Standard_LRS"
-        ],
-        "allowedValues": [
-          "Premium_LRS",
-          "Standard_GRS",
-          "Standard_LRS",
-          "Standard_RAGRS",
-          "Standard_ZRS"
-        ]
-      },
-      "Policy_Resource-Types-DENY": {
-        "type": "array",
-        "metadata": {
-          "displayName": "Select the Azure Resource Types that you will DENY",
-          "description": "Policy_Resource-Types-DENY",
-          "strongType": "resourceTypes"
-        }
+        "defaultValue": ""
       },
       "LogAnalytics_DataRetention": {
         "type": "int",
@@ -273,6 +260,7 @@
           "Canada Central",
           "Central India",
           "Central US",
+          "China East 2",
           "East Asia",
           "East US",
           "East US 2",
@@ -286,6 +274,7 @@
           "Southeast Asia",
           "UK South",
           "UK West",
+          "West Central US",
           "West Europe",
           "West US",
           "West US 2"
@@ -305,18 +294,144 @@
           "description": "IPAddress_Space"
         },
         "defaultValue": "10.0"
+      },
+      "AzureRegion": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Select the Azure Region to deploy the Resources",
+          "description": "AzureRegion",
+          "strongType": "location"
+        },
+        "defaultValue": "eastus"
+      },
+      "TimeZone": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Select the TimeZone for your VMs",
+          "description": "Select TimeZone"
+        },
+        "allowedValues": [
+          "Dateline Standard Time",
+          "UTC-11",
+          "Hawaiian Standard Time",
+          "Alaskan Standard Time",
+          "Pacific Standard Time (Mexico)",
+          "Pacific Standard Time",
+          "US Mountain Standard Time",
+          "Mountain Standard Time (Mexico)",
+          "Mountain Standard Time",
+          "Central America Standard Time",
+          "Central Standard Time",
+          "Central Standard Time (Mexico)",
+          "Canada Central Standard Time",
+          "SA Pacific Standard Time",
+          "Eastern Standard Time (Mexico)",
+          "Eastern Standard Time",
+          "US Eastern Standard Time",
+          "Venezuela Standard Time",
+          "Paraguay Standard Time",
+          "Atlantic Standard Time",
+          "Central Brazilian Standard Time",
+          "SA Western Standard Time",
+          "Newfoundland Standard Time",
+          "E. South America Standard Time",
+          "SA Eastern Standard Time",
+          "Argentina Standard Time",
+          "Greenland Standard Time",
+          "Montevideo Standard Time",
+          "Bahia Standard Time",
+          "Pacific SA Standard Time",
+          "UTC-02",
+          "Azores Standard Time",
+          "Cape Verde Standard Time",
+          "Morocco Standard Time",
+          "UTC",
+          "GMT Standard Time",
+          "Greenwich Standard Time",
+          "W. Europe Standard Time",
+          "Central Europe Standard Time",
+          "Romance Standard Time",
+          "Central European Standard Time",
+          "W. Central Africa Standard Time",
+          "Namibia Standard Time",
+          "Jordan Standard Time",
+          "GTB Standard Time",
+          "Middle East Standard Time",
+          "Egypt Standard Time",
+          "Syria Standard Time",
+          "E. Europe Standard Time",
+          "South Africa Standard Time",
+          "FLE Standard Time",
+          "Turkey Standard Time",
+          "Israel Standard Time",
+          "Kaliningrad Standard Time",
+          "Libya Standard Time",
+          "Arabic Standard Time",
+          "Arab Standard Time",
+          "Belarus Standard Time",
+          "Russian Standard Time",
+          "E. Africa Standard Time",
+          "Iran Standard Time",
+          "Arabian Standard Time",
+          "Azerbaijan Standard Time",
+          "Russia Time Zone 3",
+          "Mauritius Standard Time",
+          "Georgian Standard Time",
+          "Caucasus Standard Time",
+          "Afghanistan Standard Time",
+          "West Asia Standard Time",
+          "Ekaterinburg Standard Time",
+          "Pakistan Standard Time",
+          "India Standard Time",
+          "Sri Lanka Standard Time",
+          "Nepal Standard Time",
+          "Central Asia Standard Time",
+          "Bangladesh Standard Time",
+          "N. Central Asia Standard Time",
+          "Myanmar Standard Time",
+          "SE Asia Standard Time",
+          "North Asia Standard Time",
+          "China Standard Time",
+          "North Asia East Standard Time",
+          "Singapore Standard Time",
+          "W. Australia Standard Time",
+          "Taipei Standard Time",
+          "Ulaanbaatar Standard Time",
+          "Tokyo Standard Time",
+          "Korea Standard Time",
+          "Yakutsk Standard Time",
+          "Cen. Australia Standard Time",
+          "AUS Central Standard Time",
+          "E. Australia Standard Time",
+          "AUS Eastern Standard Time",
+          "West Pacific Standard Time",
+          "Tasmania Standard Time",
+          "Magadan Standard Time",
+          "Vladivostok Standard Time",
+          "Russia Time Zone 10",
+          "Central Pacific Standard Time",
+          "Russia Time Zone 11",
+          "New Zealand Standard Time",
+          "UTC+12",
+          "Fiji Standard Time",
+          "Tonga Standard Time",
+          "Samoa Standard Time",
+          "Line Islands Standard Time"
+
+        ]
       }
     },
     "resourceGroups": {
       "SharedServices-RG": {
-        "name": "[concat(parameters('Organization_Name'),'-sharedsvcs-rg')]",
+        "name": "[concat(parameters('Organization_Name'),'-SharedSvcs-rg')]",
         "location": "[parameters('AzureRegion')]",
         "metadata": {
           "displayName": "Resource Group for Shared Services"
         },
-        "dependsOn": [
-
-        ]
+        "dependsOn": [],
+        "tags": {
+          "CostCenter": "[parameters('Policy_CostCenter_Tag')]"
+        }
       },
       "Network-RG": {
         "name": "[concat(parameters('Organization_Name'),'-VNet-rg')]",
@@ -324,9 +439,10 @@
         "metadata": {
           "displayName": "Resource Group for Networks"
         },
-        "dependsOn": [
-
-        ]
+        "dependsOn": [],
+        "tags": {
+          "CostCenter": "[parameters('Policy_CostCenter_Tag')]"
+        }
       },
       "Identity-RG": {
         "name": "[concat(parameters('Organization_Name'),'-Identity-rg')]",
@@ -334,9 +450,10 @@
         "metadata": {
           "displayName": "Resource Group for Identity Services"
         },
-        "dependsOn": [
-
-        ]
+        "dependsOn": [],
+        "tags": {
+          "CostCenter": "[parameters('Policy_CostCenter_Tag')]"
+        }
       },
       "Application-RG": {
         "name": "[concat(parameters('Organization_Name'),'-Application-rg')]",
@@ -344,13 +461,14 @@
         "metadata": {
           "displayName": "Resource Group for First Application"
         },
-        "dependsOn": [
-
-        ]
+        "dependsOn": [],
+        "tags": {
+          "CostCenter": "[parameters('Policy_CostCenter_Tag')]"
+        }
       }
     },
-    "displayName": "Deploy Cloud Adoption Framework - Azure Governance Foundation",
-    "description": "Azure Governance",
+    "displayName": "CAF Governance Foundation",
+    "description": "Microsoft Cloud Adoption Framework for Azure - Configure Azure Governance Foundational best practices",
     "targetScope": "subscription"
   }
 }

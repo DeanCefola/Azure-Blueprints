@@ -1,0 +1,20 @@
+{
+  "properties": {
+    "targetScope": "subscription",
+    "parameters": {
+      "[Usergrouporapplicationname]:Contributor_RoleAssignmentName": {
+        "type": "array",
+        "metadata": {
+          "displayName": "[User group or application name] ([User group or application name] : Contributor)",
+          "strongType": "PrincipalId"
+        }
+      }
+    },
+    "resourceGroups": {
+      "ResourceGroup": {
+        "dependsOn": []
+      }
+    },
+    "blueprintName": "test"
+  }
+}

@@ -9,9 +9,7 @@
       }
     },
     "dependsOn": [
-      "TEMPLATE-LogAnalytics--DEPLOY",
-      "TEMPLATE-KeyVault--DEPLOY",
-      "TEMPLATE-vNET--DEPLOY"
+      
     ],
     "template": {
       "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
@@ -45,7 +43,7 @@
         }
       },
       "variables": {
-        "Azure_Migrate_Name": "[concat(parameters('Organization_Name'),'-Migrate')]"        
+        "Azure_Migrate_Name": "[concat(parameters('Organization_Name'),'-Migrate')]"
       },
       "resources": [
         {
@@ -177,7 +175,7 @@
 
       }
     },
-    "resourceGroup": "SharedServices-RG",
+    "resourceGroup": "Migrate-RG",
     "displayName": "Deploy Azure Migrate",
     "description": "Deploy Azure Migrate Project"
   },

@@ -1,15 +1,15 @@
 
 **Learn more about Blueprints at The Azure Academy**
 ============================
-	https://www.youtube.com/AzureAcademy/playlists
+	https://www.youtube.com/watch?v=EwO25vecGUo&list=PL-V4YVm6AmwX7mtRjecoRyefLKOGMEUfq
 	
 	
-**Purpose of the AMP Blueprint**
+**Purpose of the CAF Migration landing zone Blueprint**
 ============================
 	Prepare customer subscription for Migration to Azure
 
 
-**What is the AMP Blueprint create for you:**
+**What is the CAF Migration landing zone Blueprint create for you:**
 ============================
 	Resource Groups
 		"SharedServices-RG":

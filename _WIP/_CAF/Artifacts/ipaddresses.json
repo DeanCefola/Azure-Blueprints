@@ -1,0 +1,75 @@
+{
+    "properties": {
+        "template": {
+            "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+            "contentVersion": "1.0.0.0",
+            "parameters": {
+                "environmentKey": {
+                    "type": "string",
+                    "metadata": {
+                        "displayName": "Environment Key",
+                        "description": "Display tag for the environment being provisioned - Dev, Test, LoadTest, UAT, Prod etc.",
+                        "strongType": "environmentKey"
+                    },
+                    "defaultValue": ""
+                },
+                "organization": {
+                    "type": "string",
+                    "metadata": {
+                        "description": "Organization name, i.e. jhp"
+                    }
+                }
+            },
+            "variables": {
+                "deployment-prefix": "[concat(parameters('organization'), '-sharedsvcs')]",
+                "azure-fw-pip-name": "[concat(variables('deployment-prefix'), '-az-fw-pip')]"
+            },
+            "resources": [
+                {
+                    "name": "[variables('azure-fw-pip-name')]",
+                    "condition": "equals(parameters('azure-firewall-deploy'), bool('true'))",
+                    "type": "Microsoft.Network/publicIPAddresses",
+                    "sku": {
+                        "name": "Basic",
+                        "tier": "Regional"
+                    },
+                    "apiVersion": "2017-10-01",
+                    "location": "[resourceGroup().location]",
+                    "tags": {
+                        "Environment": "[parameters('environmentKey')]",
+                        "DeptName": "Information Technology",
+                        "PlatformTeam": "Ops",
+                        "Purpose": "Foundation Infrastructure",
+                        "ServiceType": "Public IP Address",
+                        "displayName": "[variables('azure-fw-pip-name')]"
+                    },
+                    "properties": {
+                        "publicIPAddressVersion": "IPv4",
+                        "publicIPAllocationMethod": "Dynamic",
+                        "idleTimeoutInMinutes": 4
+                    }
+                }
+            ],
+            "outputs": {}
+        },
+        "parameters": {
+            "environmentKey": {
+                "value": "[parameters('environmentKey')]"
+            },
+            "organization": {
+                "value": "[parameters('organization')]"
+            },
+            "azure-firewall-deploy": {
+                "value": "[parameters('azure-firewall-deploy')]"
+            }
+        },
+        "dependsOn": [
+            "net"
+        ],
+        "resourceGroup": "NetworkResourceGroup",
+        "displayName": "Puplic IP Addresses",
+        "description": ""
+    },
+    "kind": "template",
+    "type": "Microsoft.Blueprint/blueprints/artifacts"
+}

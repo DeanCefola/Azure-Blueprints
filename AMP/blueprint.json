@@ -25,7 +25,7 @@
           "description": "Azure Migrate Location"
         },
         "defaultValue": "West US 2",
-        "allowedValues": [          
+        "allowedValues": [
           "Central US",
           "East Asia",
           "North Europe",
@@ -81,6 +81,7 @@
           "Canada Central",
           "Central India",
           "Central US",
+          "China East 2",
           "East Asia",
           "East US",
           "East US 2",
@@ -94,6 +95,7 @@
           "Southeast Asia",
           "UK South",
           "UK West",
+          "West Central US",
           "West Europe",
           "West US",
           "West US 2"
@@ -102,13 +104,13 @@
     },
     "resourceGroups": {
       "SharedServices-RG": {
-        "name": "[concat(parameters('Organization_Name'),'-sharedsvcs-rg')]",
+        "name": "[concat(parameters('Organization_Name'),'-SharedSvcs-rg')]",
         "location": "[parameters('AzureRegion')]",
         "metadata": {
           "displayName": "Resource Group for Shared Services"
         },
         "dependsOn": [
-          
+
         ]
       },
       "Network-RG": {
@@ -120,10 +122,20 @@
         "dependsOn": [
 
         ]
-      }      
+      },
+      "Migrate-RG": {
+        "name": "[concat(parameters('Organization_Name'),'-Migrate-rg')]",
+        "location": "[parameters('AzureRegion')]",
+        "metadata": {
+          "displayName": "Resource Group for Azure Migrate"
+        },
+        "dependsOn": [
+
+        ]
+      }
     },
-    "displayName": "Deploy Cloud Adoption Framework - Azure Migrate landing zone",
-    "description": "Azure Migrate landing zone",
+    "displayName": "CAF Migration landing zone",
+    "description": "Microsoft Cloud Adoption Framework for Azure - Create your landing zone & Azure Migrate project",
     "targetScope": "subscription"
   }  
 }

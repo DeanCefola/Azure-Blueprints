@@ -1,16 +1,16 @@
 
 **Learn more about Blueprints at The Azure Academy**
 ============================
-	https://www.youtube.com/AzureAcademy/playlists
+	https://www.youtube.com/watch?v=EwO25vecGUo&list=PL-V4YVm6AmwX7mtRjecoRyefLKOGMEUfq
 	
 	
 
-**Purpose of The Governance Blueprint**
+**Purpose of The CAF Foundation Blueprint**
 ============================
 	The Azure Governance Blueprint is a set of controls to help you manage your cloud estate
 
 		
-**What The Governance Blueprint will create for you:**
+**What The CAF Foundation Blueprint will create for you:**
 ============================
 	Azure Resource Groups
 		  "SharedServices-RG": 
